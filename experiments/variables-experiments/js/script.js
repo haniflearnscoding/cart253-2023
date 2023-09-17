@@ -8,6 +8,11 @@
 
 "use strict";
 
+let bgShade = 0;
+let circleX = 250;
+let circleY = 250;
+let circleSize = 100;
+
 /**
  * Description of preload
 */
@@ -20,7 +25,8 @@ function preload() {
  * Description of setup
 */
 function setup() {
-    createCanvas(windowWidth,windowHeight);
+    createCanvas(500, 500);
+    
 
 }
 
@@ -28,9 +34,10 @@ function setup() {
 /**
  * Description of draw()
 */
-function draw() {
-    background(255, 0, 0);
-    rectMode(CENTER);
-    rect(mouseX, mouseY, 100, 100);
 
+function draw() {
+    background(bgShade);
+    ellipse(circleX,circleY,circleSize);
+
+    
 }
