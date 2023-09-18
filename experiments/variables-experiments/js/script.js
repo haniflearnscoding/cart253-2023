@@ -11,17 +11,18 @@
 let bgShade = 0;
 
 
-// let circle = {
-//     x: 0,
-//     y: 250,
-//     size: 100,
-//     speed: 2,
-// };
+let circle = {
+    x: 250,
+    y: 250,
+    size: 100,
+    speed: 1,
+    fill: 0
+};
 
-let circleX = 0;
-let circleY = 250;
-let circleSize = 200;
-let circleSpeed = 2;
+// let circleX = 0;
+// let circleY = 250;
+// let circleSize = 200;
+// let circleSpeed = 2;
 
 
 
@@ -50,11 +51,20 @@ function setup() {
 function draw() {
     
     background(bgShade);
-    circleX += circleSpeed;
+
+    circle.speed = random(-5, 5);
+    circle.x += circle.speed;
+    circle.y = random(0, height);
+    circle.size = random(10,100);
     
-    ellipse(circleX, circleY, circleSize);
+    circle.fill = random(0,255);
+    fill(circle.fill);
+    ellipse(circle.x, circle.y, circle.size);
+
+    let randomNum = random();
+    console.log(randomNum);
     
-    console.log(`circleX: ${circleX}, circleY: ${circleY}, circleSize: ${circleSize}, circleSpeed: ${circleSpeed} `);
+    // console.log(`circleX: ${circleX}, circleY: ${circleY}, circleSize: ${circleSize}, circleSpeed: ${circleSpeed} `);
     
 
     
