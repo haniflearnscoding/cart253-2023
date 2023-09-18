@@ -11,12 +11,18 @@
 let bgShade = 0;
 
 
-let circle = {
-    x: 0,
-    y: 250,
-    size: 100,
-    speed: 2,
-};
+// let circle = {
+//     x: 0,
+//     y: 250,
+//     size: 100,
+//     speed: 2,
+// };
+
+let circleX = 0;
+let circleY = 250;
+let circleSize = 200;
+let circleSpeed = 2;
+
 
 
 /**
@@ -44,9 +50,12 @@ function setup() {
 function draw() {
     
     background(bgShade);
-    circle.x += circle.speed;
+    circleX += circleSpeed;
     
-    ellipse(circle.x,circle.y,circle.size);
+    ellipse(circleX, circleY, circleSize);
+    
+    console.log(`circleX: ${circleX}, circleY: ${circleY}, circleSize: ${circleSize}, circleSpeed: ${circleSpeed} `);
+    
 
     
 }
