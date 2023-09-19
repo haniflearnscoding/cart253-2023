@@ -118,4 +118,16 @@ function draw() {
     circle3.fill = map(mouseX, 0, width, 0, 255);
     fill(circle3.fill);
 
+    //rectangle
+    rectMode(CENTER);
+    rect1.y = rect1.y + rect1.speed
+    rect1.y = constrain(rect1.y, width / 2, width);
+    rect1.size = rect1.size + rect1.growthRate;
+    rect1.size = constrain(rect1.size,0,width);
+    rect(rect1.x, rect1.y, rect1.size);
+    
+    //triangle
+
+    triangle(tri1.x1, tri1.y1, tri1.x2, tri1.y2, tri1.x3, tri1.y3);
+
 }
