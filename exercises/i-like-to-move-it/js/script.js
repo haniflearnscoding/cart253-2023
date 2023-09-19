@@ -88,4 +88,11 @@ function setup() {
 */
 function draw() {
 
+     // background
+    background(bg.r, bg.g, bg.b);
+    bg.r = map(circle1.size, 100, width, 0, 255);
+    bg.r += 10;
+    bg.g += 10;
+    bg.b += 10;
+
 }
