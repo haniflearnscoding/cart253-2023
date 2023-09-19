@@ -39,6 +39,32 @@ let circle2 = {
 
 }
 
+let circle3 = {
+    x: 250,
+    y: 250,
+    size: 50,
+    fill: 0
+    
+
+}
+
+let rect1 = {
+    x: 250,
+    y: 500,
+    size: 150,
+    speed: -1,
+    growthRate: 1
+}
+
+let tri1 = {
+    x1: 250,
+    y1: 0,
+    x2: 0,
+    y2: 500,
+    x3: 500,
+    y3: 500
+
+}
 
 
 
@@ -68,9 +94,14 @@ function setup() {
 function draw() {
     // background
     background(bg.r, bg.g, bg.b);
-    bg.r = map(circle1.size,100,width,0,255);
+    bg.r = map(circle1.size, 100, width, 0, 255);
+    bg.r += 10;
+    bg.g += 10;
+    bg.b += 10;
+
 
     //circle 1
+   
     circle1.x = circle1.x + circle1.speed;
     circle1.x = constrain(circle1.x, 0, width / 2);
     circle1.size = circle1.size + circle1.growthRate; 
@@ -85,7 +116,36 @@ function draw() {
     fill(circle2.fill, circle2.alpha);
     ellipse(circle2.x, circle2.y, circle2.size);
 
+    //circle 3
+    ellipse(circle3.x, circle3.y, circle3.size);
+    circle3.x = mouseX;
+    circle3.y = mouseY;
+    circle3.fill = map(mouseX, 0, width, 0, 255);
+    fill(circle3.fill);
+
+    //rectangle
+    rectMode(CENTER);
+    rect1.y = rect1.y + rect1.speed
+    rect1.y = constrain(rect1.y, width / 2, width);
+    rect1.size = rect1.size + rect1.growthRate;
+    rect1.size = constrain(rect1.size,0,width);
+    rect(rect1.x, rect1.y, rect1.size);
+    
+    //triangle
+
+    triangle(tri1.x1, tri1.y1, tri1.x2, tri1.y2, tri1.x3, tri1.y3);
+
+   
+  
+  
+}
     
 
 
-}
+    
+
+
+    
+    
+
+
