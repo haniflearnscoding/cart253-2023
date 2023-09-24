@@ -44,5 +44,14 @@ function setup() {
  * Description of draw()
 */
 function draw() {
+    background(0);
 
+    // standard movement code
+    covid19.x = covid19.x + covid19.vx;
+    covid19.y = covid19.y + covid19.vy;
+
+    // draw and move
+    fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
+    noStroke();
+    ellipse(covid19.x,covid19.y,covid19.size);
 }
