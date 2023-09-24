@@ -1,12 +1,16 @@
 
 "use strict";
-let caterPillar = {
-    x: 100,
+let circle = {
+    x: undefined,
+    y: undefined,
+    size: 100
+};
+
+let dangerZone = {
+    x: 250,
     y: 250,
-    segmentSize: 50
+    size: 150
 }
-
-
 
 /**
  * Description of preload
@@ -20,7 +24,18 @@ function preload() {
  * Description of setup
 */
 function setup() {
-    createCanvas(500,500);
+    createCanvas(500, 500);
+    
+    circle.x = random(0, width);
+    circle.y = random(0, height);
+    
+    let d = dist(circle.x, circle.y, dangerZone.x, dangerZone.y);
+    while (d < circle.size / 2 + dangerZone.size / 2) {
+        circle.x = random(0, width);
+        circle.y = random(0, height);
+        d = dist(circle.x, circle.y, dangerZone.x, dangerZone.y);
+    }
+    
 
 }
 
@@ -30,27 +45,17 @@ function setup() {
 */
 function draw() {
     background(0);
-    noStroke();
-    fill(100,200,100);
    
-    // let x = caterPillar.x;
-    // let numSegments = 5;
-    // let segmentsDrawn = 0;
+    //danger zone
+    noFill();
+    stroke(255, 0, 0);
+    ellipse(dangerZone.x,dangerZone.y,dangerZone.size);
 
-    // while (segmentsDrawn < numSegments) { 
-    //     ellipse(x,caterPillar.y,caterPillar.segmentSize);
-    //     x += 40;
-        
-    //     segmentsDrawn++;
-    // }
+    fill(255);
+    noStroke();
+    ellipse(circle.x,circle.y,circle.size);    
     
-    let x = caterPillar.x;
-    let numSegments = 10;
-
-    for (let i = 0; i < numSegments; i++) { 
-        ellipse(x, caterPillar.y, caterPillar.segmentSize);
-        x += 40;
-    }
+    
     
     
 }
