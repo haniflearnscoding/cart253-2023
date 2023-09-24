@@ -19,7 +19,13 @@ let covid19 = {
         g: 0,
         b: 0
     }
+}
 
+let user = {
+    x: 250,
+    y: 250,
+    size: 100,
+    fill: 255
 }
 
 /**
@@ -35,6 +41,7 @@ function preload() {
 */
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    //set covid19
     covid19.y = random(0, height);
     covid19.vx = covid19.speed
 }
@@ -46,17 +53,27 @@ function setup() {
 function draw() {
     background(0);
 
+    //draw user
+    user.x = mouseX;
+    user.y = mouseY;
+
     // standard movement code
     covid19.x = covid19.x + covid19.vx;
     covid19.y = covid19.y + covid19.vy;
 
-    // draw and move
+    // draw and move covid19
     fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
     noStroke();
     ellipse(covid19.x, covid19.y, covid19.size);
     
+    //resets to the left
     if (covid19.x > width) { 
         covid19.x = 0;
         covid19.y = random(0,height);
     }
+
+    //fill and move user
+    fill(user.fill);
+    ellipse(user.x, user.y, user.size);
+
 }
