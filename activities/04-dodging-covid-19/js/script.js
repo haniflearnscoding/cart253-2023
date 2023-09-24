@@ -53,5 +53,10 @@ function draw() {
     // draw and move
     fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
     noStroke();
-    ellipse(covid19.x,covid19.y,covid19.size);
+    ellipse(covid19.x, covid19.y, covid19.size);
+    
+    if (covid19.x > width) { 
+        covid19.x = 0;
+        covid19.y = random(0,height);
+    }
 }
