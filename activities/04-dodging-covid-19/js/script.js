@@ -28,6 +28,8 @@ let user = {
     fill: 255
 }
 
+let numStatic = 5000;
+
 /**
  * Description of preload
 */
@@ -53,6 +55,14 @@ function setup() {
 function draw() {
     background(0);
 
+    //static
+    for (let i = 0; i < numStatic; i++) { 
+        let x = random(0, width);
+        let y = random(0, height);
+        stroke(255);
+        point(x,y);
+    }
+
     //draw user
     user.x = mouseX;
     user.y = mouseY;
@@ -60,6 +70,12 @@ function draw() {
     // standard movement code
     covid19.x = covid19.x + covid19.vx;
     covid19.y = covid19.y + covid19.vy;
+
+    //check if circles touch
+    let d = dist(user.x, user.y, covid19.x, covid19.y);
+    if (d < covid19.size/2 + user.size/2) { 
+        noLoop();
+    }
 
     // draw and move covid19
     fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
@@ -75,5 +91,4 @@ function draw() {
     //fill and move user
     fill(user.fill);
     ellipse(user.x, user.y, user.size);
-
 }
