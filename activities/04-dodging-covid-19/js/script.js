@@ -1,5 +1,5 @@
 /**
- * Dodging COVID-19
+ * Dodging COVID-19.
  * Hanif Hashim
  * 
  * Dodging COVID-19 simulation using P5. 
