@@ -26,7 +26,10 @@ let user = {
     y: 250,
     vx: 0,
     vy: 0,
-    speed: 3,
+    ax: 0,
+    ay: 0,
+    maxSpeed: 100,
+    acceleration: 4,
     size: 100,
     fill: 255
 }
@@ -94,24 +97,30 @@ function draw() {
     //fill and draw user
     fill(user.fill);
 
-    //user movement
-    user.x = user.x + user.vx;
-    user.y = user.y + user.vy;
+    //user movement & acceleration
 
     if (mouseX > user.x) {
-        user.vx = user.speed;
+        user.vx = user.acceleration;
     }
     else if (mouseX < user.x) { 
-        user.vx = -user.speed
+        user.vx = -user.acceleration;
     }
 
     if (mouseY > user.y) {
-        user.vy = user.speed;
+        user.vy = user.acceleration;
     }
     else if (mouseY < user.y) { 
-        user.vy = -user.speed;;
+        user.vy = -user.acceleration;
     }
 
+    user.vx = user.vx + user.ax;
+    user.vx = constrain(user.vx, -user.maxSpeed, user.maxSpeed);
+    user.vy = user.vy + user.ay;
+    user.vy = constrain(user.vy, -user.maxSpeed, user.maxSpeed);
+
+    user.x = user.x + user.vx;
     user.y = user.y + user.vy;
+
+
     ellipse(user.x, user.y, user.size);
 }

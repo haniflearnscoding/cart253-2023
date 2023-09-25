@@ -1,37 +1,57 @@
-let angle = 0;
-let rectScale = 0;
-
-
-/**
- * Description of preload
-*/
-function preload() {
-
+let backgroundShade = 0;
+let circle = {
+  x: 0,
+  y: 250,
+  size: 100,
+  vx: 0,
+  vy: 0,
+  ax: 0, // NEW: acceleration in x
+  ay: 0, // NEW: acceleration in y
+  maxSpeed: 2, // RENAMED: to reflect a maximum speed
+  acceleration: 0.05 // NEW: how much the circle can accelerate per frame
 }
 
-
-/**
- * Description of setup
-*/
 function setup() {
-    createCanvas(500,500);
+  createCanvas(500, 500);
 }
 
-
-/**
- * Description of draw()
-*/
 function draw() {
-    background(0);
+  background(backgroundShade);
 
-    fill(255, 0, 0);
-    rectMode(CENTER);
-    translate(width/2,height/2);
-    rotate(angle);
-    scale(rectScale);
-    rect(0, 0, 100, 100);
-    pop();
+  // If the mouse x position is GREATER than the circle x position, it must be to the RIGHT of the circle
+  if (mouseX > circle.x) {
+    // So set the circle's x acceleration to positive to start moving it right
+    circle.ax = circle.acceleration;
+  }
+  // Or if the mouse x position is LESS than the circle x position, it must be to the LEFT of the circle
+  else if (mouseX < circle.x) {
+    // So set the circle's x acceleration to negative to start it moving left
+    circle.ax = -circle.acceleration;
+  }
 
-    angle += 0.01;
-    rectScale += 0.01;
+  // If the mouse position is GREATER than the circle y position, it must be BELOW the circle
+  if (mouseY > circle.y) {
+    // So set the circle's y acceleration to positive start it moving down
+    circle.ay = circle.acceleration;
+  }
+  // Or if the mouse y position is LESS than the circle y position, it must be ABOVE the circle
+  else if (mouseY < circle.y) {
+    // So set the circle's y acceleration to negative start it moving up
+    circle.ay = -circle.acceleration;
+  }
+
+  // Update the circle's current velocity based on its acceleration!
+  // Note that we also want to CONSTRAIN the velocity to not exceed the maximum speed
+  circle.vx = circle.vx + circle.ax;
+  circle.vx = constrain(circle.vx, -circle.maxSpeed, circle.maxSpeed);
+
+  circle.vy = circle.vy + circle.ay;
+  circle.vy = constrain(circle.vy, -circle.maxSpeed, circle.maxSpeed);
+
+  // Then we actually APPLY these changes to `vx` and `vy` to the circle's position
+  circle.x = circle.x + circle.vx;
+  circle.y = circle.y + circle.vy;
+
+  // And draw the ellipse at its new position
+  ellipse(circle.x, circle.y, circle.size);
 }
