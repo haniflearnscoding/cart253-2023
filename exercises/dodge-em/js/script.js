@@ -28,8 +28,8 @@ let user = {
     vy: 0,
     ax: 0,
     ay: 0,
-    maxSpeed: 100,
-    acceleration: 4,
+    maxSpeed: 10,
+    acceleration: 0.1,
     size: 100,
     fill: 255
 }
@@ -69,9 +69,7 @@ function draw() {
         point(x,y);
     }
 
-    //set user
-    // user.x = mouseX;
-    // user.y = mouseY;
+    
 
     // standard movement code
     covid19.x = covid19.x + covid19.vx;
@@ -100,17 +98,17 @@ function draw() {
     //user movement & acceleration
 
     if (mouseX > user.x) {
-        user.vx = user.acceleration;
+        user.ax = user.acceleration;
     }
     else if (mouseX < user.x) { 
-        user.vx = -user.acceleration;
+        user.ax = -user.acceleration;
     }
 
     if (mouseY > user.y) {
-        user.vy = user.acceleration;
+        user.ay = user.acceleration;
     }
     else if (mouseY < user.y) { 
-        user.vy = -user.acceleration;
+        user.ay = -user.acceleration;
     }
 
     user.vx = user.vx + user.ax;
