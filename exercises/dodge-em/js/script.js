@@ -24,6 +24,9 @@ let covid19 = {
 let user = {
     x: 250,
     y: 250,
+    vx: 0,
+    vy: 0,
+    speed: 3,
     size: 100,
     fill: 255
 }
@@ -63,9 +66,9 @@ function draw() {
         point(x,y);
     }
 
-    //draw user
-    user.x = mouseX;
-    user.y = mouseY;
+    //set user
+    // user.x = mouseX;
+    // user.y = mouseY;
 
     // standard movement code
     covid19.x = covid19.x + covid19.vx;
@@ -88,7 +91,27 @@ function draw() {
         covid19.y = random(0,height);
     }
 
-    //fill and move user
+    //fill and draw user
     fill(user.fill);
+
+    //user movement
+    user.x = user.x + user.vx;
+    user.y = user.y + user.vy;
+
+    if (mouseX > user.x) {
+        user.vx = user.speed;
+    }
+    else if (mouseX < user.x) { 
+        user.vx = -user.speed
+    }
+
+    if (mouseY > user.y) {
+        user.vy = user.speed;
+    }
+    else if (mouseY < user.y) { 
+        user.vy = -user.speed;;
+    }
+
+    user.y = user.y + user.vy;
     ellipse(user.x, user.y, user.size);
 }
