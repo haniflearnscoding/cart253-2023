@@ -3,7 +3,11 @@
  * Hanif Hashim
  * 
  * Dodging COVID-19 simulation using P5. - Exercise 2
+ * 
+ * Bacteria image attribution
+ * <a href="http://www.freepik.com">Designed by Freepik</a>
  */
+
 
 "use strict";
 
