@@ -36,7 +36,9 @@ let user = {
         g: 255,
         b: 255,
         a: 1
-    }
+    },
+    alphaAngle: 0
+
 }
 
 let numStatic = 250;
@@ -57,11 +59,15 @@ function preload() {
 */
 function setup() {
     createCanvas(500, 500);
+
     //set covid19
     covid19.y = random(0, height);
     covid19.vx = covid19.speed
+
+    //declared bg img
+    image(img, 0, 0);
     //
-    image(img,0,0);
+    angleMode(DEGREES);
 }
 
 
@@ -101,19 +107,24 @@ function draw() {
         covid19.x = 0;
         covid19.y = random(0,height);
     }
+    
+    let sinValue = sin(user.alphaAngle);
+    user.fill.a = map(sinValue, -1, 1, 0, 255);
 
     //fill and draw user
     fill(user.fill.r, user.fill.g, user.fill.b, user.fill.a);
+
+    user.alphaAngle += 0.8;
     
     //increase or decrease covid19 opacity as it gets close to user
-    if (covid19.x < user.x) {
-        user.fill.a += 1;
+    // if (covid19.x < user.x) {
+    //     user.fill.a += 1;
         
-    }
-    else if (covid19.x > user.x) { 
-        user.fill.a -= 1;
+    // }
+    // else if (covid19.x > user.x) { 
+    //     user.fill.a -= 1;
         
-    }
+    // }
     
     
     //user movement & acceleration
