@@ -29,12 +29,14 @@ let user = {
     ax: 0,
     ay: 0,
     maxSpeed: 10,
-    acceleration: 0.1,
+    acceleration: 0.5,
     size: 100,
     fill: 255
 }
 
 let numStatic = 5000;
+
+
 
 /**
  * Description of preload
@@ -52,6 +54,8 @@ function setup() {
     //set covid19
     covid19.y = random(0, height);
     covid19.vx = covid19.speed
+
+    
 }
 
 
@@ -69,8 +73,6 @@ function draw() {
         point(x,y);
     }
 
-    
-
     // standard movement code
     covid19.x = covid19.x + covid19.vx;
     covid19.y = covid19.y + covid19.vy;
@@ -79,12 +81,14 @@ function draw() {
     let d = dist(user.x, user.y, covid19.x, covid19.y);
     if (d < covid19.size/2 + user.size/2) { 
         noLoop();
+        
     }
 
     // draw and move covid19
     fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
     noStroke();
     ellipse(covid19.x, covid19.y, covid19.size);
+    
     
     //resets to the left
     if (covid19.x > width) { 
@@ -94,9 +98,25 @@ function draw() {
 
     //fill and draw user
     fill(user.fill);
+    
+    //increase or decrease covid19 size as it gets close to user
+    let currentDistance = dist(covid19.x, covid19.y, user.x, user.y);
+    let previousDistance = dist(user.x, user.y, covid19.x, covid19.y);  
+    
+    text("Current Distance: " + currentDistance, 10, 30);
+    text("Previous Distance: " + previousDistance, 10, 60);
+    textWrap(WORD);
 
+    if (currentDistance > previousDistance) {
+        covid19.size++;
+
+    }
+    else if (currentDistance < previousDistance) { 
+        covid19.size--;
+    }
+    
+    
     //user movement & acceleration
-
     if (mouseX > user.x) {
         user.ax = user.acceleration;
     }
@@ -119,6 +139,6 @@ function draw() {
     user.x = user.x + user.vx;
     user.y = user.y + user.vy;
 
-
     ellipse(user.x, user.y, user.size);
+    
 }
