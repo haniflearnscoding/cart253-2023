@@ -31,7 +31,12 @@ let user = {
     maxSpeed: 10,
     acceleration: 0.5,
     size: 100,
-    fill: 255
+    fill: {
+        r: 255,
+        g: 255,
+        b: 255,
+        a: 1
+    }
 }
 
 let numStatic = 5000;
@@ -97,22 +102,16 @@ function draw() {
     }
 
     //fill and draw user
-    fill(user.fill);
+    fill(user.fill.r, user.fill.g, user.fill.b, user.fill.a);
     
-    //increase or decrease covid19 size as it gets close to user
-    let currentDistance = dist(covid19.x, covid19.y, user.x, user.y);
-    let previousDistance = dist(user.x, user.y, covid19.x, covid19.y);  
-    
-    text("Current Distance: " + currentDistance, 10, 30);
-    text("Previous Distance: " + previousDistance, 10, 60);
-    textWrap(WORD);
-
-    if (currentDistance > previousDistance) {
-        covid19.size++;
-
+    //increase or decrease covid19 opacity as it gets close to user
+    if (covid19.x < user.x) {
+        user.fill.a += 1;
+        
     }
-    else if (currentDistance < previousDistance) { 
-        covid19.size--;
+    else if (covid19.x > user.x) { 
+        user.fill.a -= 1;
+        
     }
     
     
