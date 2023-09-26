@@ -10,7 +10,7 @@
 let covid19 = {
     x: 0,
     y: 250,
-    size: 100,
+    size: 25,
     vx: 0,
     vy: 0,
     speed: 5,
@@ -30,7 +30,7 @@ let user = {
     ay: 0,
     maxSpeed: 10,
     acceleration: 0.5,
-    size: 100,
+    size: 25,
     fill: {
         r: 255,
         g: 255,
@@ -39,15 +39,16 @@ let user = {
     }
 }
 
-let numStatic = 5000;
+let numStatic = 250;
 
-
+let img;
 
 /**
  * Description of preload
 */
-function preload() {
 
+function preload() {
+    img = loadImage('assets/images/bg.jpg');
 }
 
 
@@ -55,12 +56,12 @@ function preload() {
  * Description of setup
 */
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(500, 500);
     //set covid19
     covid19.y = random(0, height);
     covid19.vx = covid19.speed
-
-    
+    //
+    image(img,0,0);
 }
 
 
@@ -68,7 +69,7 @@ function setup() {
  * Description of draw()
 */
 function draw() {
-    background(0);
+    background(img);
 
     //static
     for (let i = 0; i < numStatic; i++) { 
