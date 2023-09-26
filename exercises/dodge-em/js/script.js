@@ -19,7 +19,7 @@ let covid19 = {
         g: 0,
         b: 0
     }
-}
+};
 
 let user = {
     x: 250,
@@ -38,19 +38,23 @@ let user = {
         a: 1
     },
     alphaAngle: 0
+};
 
-}
+let bacteria = {
+    x: 100,
+    y: 100,
+    size: 100,
+    image: undefined
+};
 
 let numStatic = 250;
-
-let img;
 
 /**
  * Description of preload
 */
 
 function preload() {
-    img = loadImage('assets/images/bg.jpg');
+    bacteria.image = loadImage('assets/images/bg.jpg');
 }
 
 
@@ -64,9 +68,6 @@ function setup() {
     covid19.y = random(0, height);
     covid19.vx = covid19.speed
 
-    //declared bg img
-    image(img, 0, 0);
-    //
     angleMode(DEGREES);
 }
 
@@ -75,8 +76,16 @@ function setup() {
  * Description of draw()
 */
 function draw() {
-    background(img);
-
+    background(0);
+    //
+    for (let x = 0; x <= width; x += bacteria.size) {
+        for (let y = 0; y <= height; y += bacteria.size) {
+            image(bacteria.image, x, y, bacteria.size, bacteria.size);
+        }
+    }
+    
+    image(bacteria.image, bacteria.x, bacteria.y, bacteria.size, bacteria.size);
+    
     //static
     for (let i = 0; i < numStatic; i++) { 
         let x = random(0, width);
@@ -92,8 +101,7 @@ function draw() {
     //check if circles touch
     let d = dist(user.x, user.y, covid19.x, covid19.y);
     if (d < covid19.size/2 + user.size/2) { 
-        noLoop();
-        
+        noLoop(); 
     }
 
     // draw and move covid19
@@ -101,13 +109,13 @@ function draw() {
     noStroke();
     ellipse(covid19.x, covid19.y, covid19.size);
     
-    
     //resets to the left
     if (covid19.x > width) { 
         covid19.x = 0;
         covid19.y = random(0,height);
     }
     
+    //transparency code
     let sinValue = sin(user.alphaAngle);
     user.fill.a = map(sinValue, -1, 1, 0, 255);
 
@@ -115,17 +123,6 @@ function draw() {
     fill(user.fill.r, user.fill.g, user.fill.b, user.fill.a);
 
     user.alphaAngle += 0.8;
-    
-    //increase or decrease covid19 opacity as it gets close to user
-    // if (covid19.x < user.x) {
-    //     user.fill.a += 1;
-        
-    // }
-    // else if (covid19.x > user.x) { 
-    //     user.fill.a -= 1;
-        
-    // }
-    
     
     //user movement & acceleration
     if (mouseX > user.x) {
