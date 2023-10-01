@@ -1,23 +1,18 @@
-/**
- * Description of preload
-*/
-
-// let circle = {
-//     x: 0,
-//     y: 250,
-//     size: 100,
-//     vx: 1,
-//     vy: 0
-// }
-function preload() {
-
+let circle = {
+  x: 250,
+  y: 250,
+  size: 100,
+  vx: 0,
+  vy: 0
 }
+
 /**
  * Description of setup
 */
 
 function setup() {
-    createCanvas(500,500);
+    createCanvas(500, 500);
+    reset();
 }
 /**
  * Description of draw()
@@ -25,30 +20,35 @@ function setup() {
 
 function draw() {
     background(0);
-    parallels(0, 200, 100, 1, 100, 4);
-    parallels(0, 300, 20, 10, 50, 12);
-    parallels(0, 350, 80, 5, 5, 6);
+    
+    move();
+
+    let offScreen = circleIsOffScreen();
+    if (offScreen) {
+    reset();
+    } 
+
+    ellipse(circle.x, circle.y, circle.size);
 
 }
 
-// function parallels(x,y) { 
-//     for (let i = 0; i < 20; i++) { 
-//         noStroke();
-//         fill(255);
-//         rectMode(CENTER);
-//         rect(x, y, 2, 50);
-//         x += 5;
-//     }
-// }
 
 
-function parallels(x, y, numLines, lineThickness, lineHeight, lineSpacing) {
-  for (let i = 0; i < numLines; i++) {
-    noStroke();
-    let lineFill = map(i, 0, numLines, 0, 255);
-    fill(lineFill);
-    rectMode(CENTER);
-    rect(x, y, lineThickness, lineHeight);
-    x = x + lineSpacing;
-  }
+function circleIsOffScreen() { 
+    let result = (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height)
+    return result;
 }
+
+function move() { 
+    circle.x = circle.x + circle.vx;
+    circle.y = circle.y + circle.vy;
+}
+
+function reset() { 
+    circle.x = 250;
+    circle.y = 250;
+    circle.vx = random(-10,10);
+    circle.vy = random(-10,10);
+}
+
+
