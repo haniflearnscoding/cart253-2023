@@ -37,8 +37,10 @@ function setup() {
     circle2.x = 2 * width / 3;
 
     //move circles randomly
-    circle1.vx = random(-circle1.speed,circle1.speed);
-    circle1.vy = random(-circle1.speed,circle1.speed);
+    // circle1.vx = random(-circle1.speed,circle1.speed);
+    // circle1.vy = random(-circle1.speed,circle1.speed);
+    
+    
     circle2.vx = random(-circle2.speed,circle2.speed);
     circle2.vy = random(-circle2.speed,circle2.speed);
     
@@ -132,4 +134,8 @@ function mousePressed() {
     if (state ===  `title`) { 
         state = `simulation`;
     }
+    //click to position - control circle 1
+    circle1.x = mouseX;
+    circle1.y = mouseY;
+  
 }
