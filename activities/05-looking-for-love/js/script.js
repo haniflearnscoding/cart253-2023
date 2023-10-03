@@ -24,6 +24,7 @@ let circle2 = {
     speed: 3
 }
 
+let state = `simulation` //title, simulation, love, sadness
 /**
  * Description of preload
 */
@@ -55,7 +56,18 @@ function setup() {
 function draw() {
     background(0);
 
-    
+    if (state === `title`) {
+
+    }
+    else if (state === `simulation`) {
+        simulation();
+    }
+    else if (state === `love`) {
+
+    }
+    else if (state === `sadness`) { 
+
+    }
 }
 
 function simulation() { 
