@@ -24,7 +24,7 @@ let circle2 = {
     speed: 3
 }
 
-let state = `simulation` //title, simulation, love, sadness
+let state = `title` //title, simulation, love, sadness
 /**
  * Description of preload
 */
@@ -57,7 +57,7 @@ function draw() {
     background(0);
 
     if (state === `title`) {
-
+        title();
     }
     else if (state === `simulation`) {
         simulation();
@@ -68,6 +68,13 @@ function draw() {
     else if (state === `sadness`) { 
 
     }
+}
+
+function title() { 
+    textSize(64); 
+    fill(200, 100, 100);
+    textAlign(CENTER, CENTER);
+    text(`LOVE?`,width/2,height/2);
 }
 
 function simulation() { 
