@@ -24,14 +24,7 @@ let circle2 = {
     speed: 3
 }
 
-let state = `title` //title, simulation, love, sadness
-/**
- * Description of preload
-*/
-function preload() {
-
-}
-
+let state = `title`; //title, simulation, love, sadness
 
 /**
  * Description of setup
@@ -44,8 +37,10 @@ function setup() {
     circle2.x = 2 * width / 3;
 
     //move circles randomly
-    circle1.vx = random(-circle1.speed, circle1.speed);
-    circle2.vx = random(-circle2.speed, circle2.speed);
+    circle1.vx = random(-circle1.speed,circle1.speed);
+    circle1.vy = random(-circle1.speed,circle1.speed);
+    circle2.vx = random(-circle2.speed,circle2.speed);
+    circle2.vy = random(-circle2.speed,circle2.speed);
     
 }
 
@@ -112,4 +107,10 @@ function display() {
     //display
     ellipse(circle1.x, circle1.y, circle1.size);
     ellipse(circle2.x, circle2.y, circle2.size);
+}
+
+function mousePressed() { 
+    if (state ===  `title`) { 
+        state = `simulation`;
+    }
 }
