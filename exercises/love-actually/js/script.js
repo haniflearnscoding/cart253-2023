@@ -41,8 +41,6 @@ function setup() {
     // circle1.vy = random(-circle1.speed,circle1.speed);
     
     
-    circle2.vx = random(-circle2.speed,circle2.speed);
-    circle2.vy = random(-circle2.speed,circle2.speed);
     
 }
 
@@ -53,6 +51,13 @@ function setup() {
 function draw() {
     background(0);
 
+    let change = random();
+    if (change < 0.05) { 
+        circle2.vx = random(-circle2.speed,circle2.speed);
+        circle2.vy = random(-circle2.speed,circle2.speed);
+    }
+    
+    
     if (state === `title`) {
         title();
     }
