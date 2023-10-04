@@ -27,6 +27,13 @@ let circle2 = {
     alpha: 255
 }
 
+let rectangle = {
+    x: 0,
+    y: 0,
+    size: 100,
+    fill: 255
+}
+
 let state = `title`; //title, simulation, love, sadness
 
 /**
@@ -63,14 +70,14 @@ function draw() {
     // else if (state === `darkness`) { 
     //     darkness();
     // }
+    else if (state === `happiness`) { 
+        happiness();
+    }
     else if (state === `love`) {
         love();
     }
     else if (state === `sadness`) { 
         sadness();
-    }
-    else if (state === `acceptance`) { 
-        acceptance();
     }
     
 }
@@ -109,12 +116,12 @@ function sadness() {
     text(`:(`, width / 2, height / 2);
     pop();
 }
-function acceptance() { 
+function happiness() { 
     push();
     textSize(64); 
     fill(150, 150, 255);
     textAlign(CENTER, CENTER);
-    text(`XX`, width / 2, height / 2);
+    text(`MANY FISHES IN TH SEA`, width / 2, height / 2);
     pop();
 }
 
@@ -142,6 +149,13 @@ function checkOverlap() {
     }
 }
 
+function secretSquare() { 
+    let d = dist(circle2.x, circle2.y, rectangle.x, rectangle.y);
+    if (d < circle2.size / 2 + rectangle.size / 2) {
+        state = `happiness`;
+    }
+}
+
 function darkness() { 
     //circle 2 opacity lowers 
     if (circle2.x > 100) { 
@@ -150,12 +164,14 @@ function darkness() {
 }
 
 function display() { 
-    //display
-    
+    //display circles
     fill(circle1.fill);
     ellipse(circle1.x, circle1.y, circle1.size);
     fill(circle2.fill, circle2.alpha);
     ellipse(circle2.x, circle2.y, circle2.size);
+    //display rectangle
+    fill(rectangle.fill);
+    rect(rectangle.x,rectangle.y,rectangle.size);
 }
 
 function mousePressed() { 
