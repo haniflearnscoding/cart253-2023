@@ -13,7 +13,8 @@ let circle1 = {
     size: 100,
     vx: 0,
     vy: 0,
-    speed: 3
+    speed: 3,
+    fill: 255
 }
 let circle2 = {
     x: undefined,
@@ -21,7 +22,9 @@ let circle2 = {
     size: 100,
     vx: 0,
     vy: 0,
-    speed: 3
+    speed: 3,
+    fill: 255,
+    alpha: 255
 }
 
 let state = `title`; //title, simulation, love, sadness
@@ -36,14 +39,7 @@ function setup() {
     circle1.x = width / 3;
     circle2.x = 2 * width / 3;
 
-    //move circles randomly
-    // circle1.vx = random(-circle1.speed,circle1.speed);
-    // circle1.vy = random(-circle1.speed,circle1.speed);
-    
-    
-    
 }
-
 
 /**
  * Description of draw()
@@ -57,19 +53,26 @@ function draw() {
         circle2.vy = random(-circle2.speed,circle2.speed);
     }
     
-    
+    //states
     if (state === `title`) {
         title();
     }
     else if (state === `simulation`) {
         simulation();
     }
+    // else if (state === `darkness`) { 
+    //     darkness();
+    // }
     else if (state === `love`) {
         love();
     }
     else if (state === `sadness`) { 
         sadness();
     }
+    else if (state === `acceptance`) { 
+        acceptance();
+    }
+    
 }
 
 function title() { 
@@ -85,6 +88,7 @@ function simulation() {
     move();
     checkOffScreen();
     checkOverlap();
+    darkness();
     display();
 }
 
@@ -96,12 +100,21 @@ function love() {
     text(`LOVE!`, width / 2, height / 2);
     pop();
 }
+
 function sadness() { 
     push();
     textSize(64); 
     fill(150, 150, 255);
     textAlign(CENTER, CENTER);
     text(`:(`, width / 2, height / 2);
+    pop();
+}
+function acceptance() { 
+    push();
+    textSize(64); 
+    fill(150, 150, 255);
+    textAlign(CENTER, CENTER);
+    text(`XX`, width / 2, height / 2);
     pop();
 }
 
@@ -129,9 +142,19 @@ function checkOverlap() {
     }
 }
 
+function darkness() { 
+    //circle 2 opacity lowers 
+    if (circle2.x > 100) { 
+        circle2.alpha -= 5;
+    }
+}
+
 function display() { 
     //display
+    
+    fill(circle1.fill);
     ellipse(circle1.x, circle1.y, circle1.size);
+    fill(circle2.fill, circle2.alpha);
     ellipse(circle2.x, circle2.y, circle2.size);
 }
 
@@ -139,8 +162,7 @@ function mousePressed() {
     if (state ===  `title`) { 
         state = `simulation`;
     }
-    //click to position - control circle 1
+    //click to position & control circle 1
     circle1.x = mouseX;
-    circle1.y = mouseY;
-  
+    circle1.y = mouseY; 
 }
