@@ -169,6 +169,7 @@ function display() {
     ellipse(circle1.x, circle1.y, circle1.size);
     fill(circle2.fill, circle2.alpha);
     ellipse(circle2.x, circle2.y, circle2.size);
+    
     //display rectangle
     fill(rectangle.fill);
     rect(rectangle.x,rectangle.y,rectangle.size);
