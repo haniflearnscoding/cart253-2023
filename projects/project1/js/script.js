@@ -2,7 +2,7 @@
  * Gardening Simulator
  * Hanif Hashim
  * 
- *Gardening simulator using js p5 library
+ * Gardening simulator using js p5 library
 
  */
 
@@ -25,7 +25,7 @@ let lemon = {
 let mushroom = {
     x: 100,
     y: 100,
-    size: 100,
+    size: 40,
     image: undefined
 };
 let potato = {
@@ -57,13 +57,13 @@ let watermelon = {
  * loading all garden plants
 */
 function preload() {
-    eggplant.image = loadImage('assets/images/');
-    lemon.image = loadImage('assets/images/');
-    mushroom.image = loadImage('assets/images/');
-    potato.image = loadImage('assets/images/');
-    tangerine.image = loadImage('assets/images/');
-    tomato.image = loadImage('assets/images/');
-    watermelon.image = loadImage('assets/images/');
+    eggplant.image = loadImage('assets/images/Eggplant.png');
+    lemon.image = loadImage('assets/images/Lemon.png');
+    mushroom.image = loadImage('assets/images/Mushroom.png');
+    potato.image = loadImage('assets/images/Potato.png');
+    tangerine.image = loadImage('assets/images/Tangerine.png');
+    tomato.image = loadImage('assets/images/Tomato.png');
+    watermelon.image = loadImage('assets/images/Watermelon.png');
 }
 
 
@@ -71,7 +71,7 @@ function preload() {
  * Description of setup
 */
 function setup() {
-
+    createCanvas(windowWidth, windowHeight);
 }
 
 
@@ -79,5 +79,13 @@ function setup() {
  * Description of draw()
 */
 function draw() {
-
+    // background(0);
+    //
+     for (let x = 0; x <= width; x += mushroom.size) {
+        for (let y = 0; y <= height; y += mushroom.size) {
+            image(mushroom.image, x, y, mushroom.size, mushroom.size);
+            image(eggplant.image, x, y, eggplant.size, eggplant.size);
+            
+        }
+     }
 }
