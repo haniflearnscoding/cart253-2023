@@ -84,7 +84,7 @@ function draw() {
      for (let x = 0; x <= width; x += mushroom.size) {
         for (let y = 0; y <= height; y += mushroom.size) {
             image(mushroom.image, x, y, mushroom.size, mushroom.size);
-            image(eggplant.image, x, y, eggplant.size, eggplant.size);
+            
             
         }
      }
