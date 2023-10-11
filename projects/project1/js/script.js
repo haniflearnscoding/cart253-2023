@@ -25,7 +25,7 @@ let lemon = {
 let mushroom = {
     x: 100,
     y: 100,
-    size: 40,
+    size: 50,
     image: undefined
 };
 let potato = {
@@ -37,7 +37,7 @@ let potato = {
 let tangerine = {
     x: 100,
     y: 100,
-    size: 100,
+    size: 50,
     image: undefined
 };
 let tomato = {
@@ -52,10 +52,15 @@ let watermelon = {
     size: 100,
     image: undefined
 };
+let market = {
+    image: undefined
+};
 
 let state = `title`; // title, simulation
 
-let futura; // font used for title screen
+// fonts used for title screen
+let futura; 
+let helvetica; 
 
 /**
  * loading all garden plants
@@ -69,9 +74,12 @@ function preload() {
     tangerine.image = loadImage('assets/images/Tangerine.png');
     tomato.image = loadImage('assets/images/Tomato.png');
     watermelon.image = loadImage('assets/images/Watermelon.png');
+
+   
     
     //fonts
     futura = loadFont('assets/fonts/FuturaStd-Medium.otf');
+    helvetica = loadFont('assets/fonts/HelveticaNeueLTStd-Lt.otf');
 }
 
 
@@ -79,8 +87,11 @@ function preload() {
  * Description of setup
 */
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    textFont(futura);
+    createCanvas(500, 500);
+    
+    textFont(helvetica);
+
+     market = loadImage('assets/images/title_screen2.png');
 }
 
 
@@ -88,7 +99,11 @@ function setup() {
  * Description of draw()
 */
 function draw() {
-    // background(0);
+    
+    background(market);
+    // strokeWeight(4);
+    // stroke(51);
+    // rect(0,0,500);
 
     //different states of the
     if (state === `title`) {
@@ -102,12 +117,15 @@ function draw() {
 
 function title() { 
     push();
-    textSize(64); 
-    fill(255);
-    textAlign(CENTER, CENTER);
-    text(`Garden simulator`, width / 2, height / 2);
+    textSize(22); 
+    fill(0);
+    textAlign(LEFT);
+    text(`Garden Simulator`, width / 18, height / 6);
+    text(`Click to start`, width / 18, height / 4);
     // text(`Click to start`, width / 2, height / 2);
     pop();
+    
+    
 }
 
 function simulation() {
@@ -125,6 +143,7 @@ function display() {
 function mousePressed() { 
     if (state ===  `title`) { 
         state = `simulation`;
+        background(255);
     }
 }
 
