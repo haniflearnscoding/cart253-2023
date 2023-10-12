@@ -91,7 +91,7 @@ function setup() {
     
     textFont(helvetica);
 
-     market = loadImage('assets/images/title_screen2.png');
+     market = loadImage('assets/images/finalArtboard 1.png');
 }
 
 
@@ -100,11 +100,10 @@ function setup() {
 */
 function draw() {
     
-    background(market);
     // strokeWeight(4);
     // stroke(51);
     // rect(0,0,500);
-
+    
     //different states of the
     if (state === `title`) {
         title();
@@ -117,6 +116,7 @@ function draw() {
 
 function title() { 
     push();
+    background(market);
     textSize(22); 
     fill(0);
     textAlign(LEFT);
