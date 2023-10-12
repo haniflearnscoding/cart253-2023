@@ -55,9 +55,16 @@ let watermelon = {
 let bee = {
     x: 100,
     y: 100,
-    size: 100,
+    vx: 0,
+    vy: 0,
+    ax: 0,
+    ay: 0,
+    maxSpeed: 10,
+    acceleration: 0.5,
+    size: 50,
     image: undefined
 };
+
 let market = {
     image: undefined
 };
@@ -158,7 +165,35 @@ function display() {
         
         plantCount++;
     }
+    image(bee.image, bee.x, bee.y, bee.size, bee.size);
 }
+//bee movement & acceleration
+function movement() {
+
+    if (mouseX > bee.x) {
+        bee.ax = bee.acceleration;
+    }
+    else if (mouseX < bee.x) { 
+        bee.ax = -bee.acceleration;
+    }
+
+    if (mouseY > bee.y) {
+        bee.ay = bee.acceleration;
+    }
+    else if (mouseY < bee.y) { 
+        bee.ay = -bee.acceleration;
+    }
+
+    bee.vx = bee.vx + bee.ax;
+    bee.vx = constrain(bee.vx, -bee.maxSpeed, bee.maxSpeed);
+    bee.vy = bee.vy + bee.ay;
+    bee.vy = constrain(bee.vy, -bee.maxSpeed, bee.maxSpeed);
+
+    bee.x = bee.x + bee.vx;
+    bee.y = bee.y + bee.vy;
+
+    
+ }
     
 
 function mousePressed() { 
