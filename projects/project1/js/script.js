@@ -43,10 +43,16 @@ let tangerine = {
 let tomato = {
     x: 100,
     y: 100,
-    size: 100,
+    size: 50,
     image: undefined
 };
 let watermelon = {
+    x: 100,
+    y: 100,
+    size: 100,
+    image: undefined
+};
+let bee = {
     x: 100,
     y: 100,
     size: 100,
@@ -74,6 +80,7 @@ function preload() {
     tangerine.image = loadImage('assets/images/Tangerine.png');
     tomato.image = loadImage('assets/images/Tomato.png');
     watermelon.image = loadImage('assets/images/Watermelon.png');
+    bee.image = loadImage('assets/images/Honeybee.png');
 
    
     
@@ -104,7 +111,7 @@ function draw() {
     // stroke(51);
     // rect(0,0,500);
     
-    //different states of the
+    //different states of the game
     if (state === `title`) {
         title();
     }
@@ -132,13 +139,27 @@ function simulation() {
     display();
 }
 // tiling of plants
+let plantCount = 0;
+
 function display() { 
-    for (let x = 0; x <= width; x += mushroom.size) {
-       for (let y = 0; y <= height; y += mushroom.size) {
-           image(mushroom.image, x, y, mushroom.size, mushroom.size);
-       }
+    if (plantCount < 10) { 
+        let placementX = random(0, 500);
+        let placementY = random(0, 500);
+    
+        image(mushroom.image, placementX, placementY, mushroom.size, mushroom.size);
+        
+        plantCount++;
+    }
+    if (plantCount < 10) { 
+        let placementX = random(0, 500);
+        let placementY = random(0, 500);
+    
+        image(tomato.image, placementX, placementY, tomato.size, tomato.size);
+        
+        plantCount++;
     }
 }
+    
 
 function mousePressed() { 
     if (state ===  `title`) { 
