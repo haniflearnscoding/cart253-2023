@@ -102,30 +102,23 @@ function preload() {
 */
 function setup() {
     createCanvas(500, 500);
-    
     textFont(helvetica);
-
-     market = loadImage('assets/images/finalArtboard 1.png');
+    market = loadImage('assets/images/finalArtboard 1.png');
 }
 
 
 /**
  * Description of draw()
 */
-function draw() {
-    
-    // strokeWeight(4);
-    // stroke(51);
-    // rect(0,0,500);
-    
+function draw() {  
     //different states of the game
     if (state === `title`) {
         title();
     }
-    else if (state === `simulation`) {
+    else if (state === `simulation`) {  
+        // background(255);
         simulation();
     }
-    
 }
 
 function title() { 
@@ -136,19 +129,15 @@ function title() {
     textAlign(LEFT);
     text(`Garden Simulator`, width / 18, height / 6);
     text(`Click to start`, width / 18, height / 4);
-    // text(`Click to start`, width / 2, height / 2);
     pop();
-    
-    
 }
 
 function simulation() {
     display();
+    movement();
 }
-// tiling of plants
-let plantCount = 0;
-
 function display() { 
+    background(255);
     if (plantCount < 10) { 
         let placementX = random(0, 500);
         let placementY = random(0, 500);
@@ -165,8 +154,13 @@ function display() {
         
         plantCount++;
     }
+    
     image(bee.image, bee.x, bee.y, bee.size, bee.size);
+    
 }
+// tiling of plants
+let plantCount = 0;
+
 //bee movement & acceleration
 function movement() {
 
@@ -192,14 +186,11 @@ function movement() {
     bee.x = bee.x + bee.vx;
     bee.y = bee.y + bee.vy;
 
-    
  }
     
-
 function mousePressed() { 
     if (state ===  `title`) { 
         state = `simulation`;
-        background(255);
     }
 }
 
