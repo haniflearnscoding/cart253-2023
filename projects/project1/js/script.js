@@ -8,18 +8,21 @@
 
 "use strict";
 
+//initialize array
+let plants = [];
+
 // objects for all plants in garden
 let eggplant = {
     x: 100,
     y: 100,
-    size: 100,
+    size: 50,
     image: undefined
 };
 
 let lemon = {
     x: 100,
     y: 100,
-    size: 100,
+    size: 50,
     image: undefined
 };
 let mushroom = {
@@ -31,7 +34,7 @@ let mushroom = {
 let potato = {
     x: 100,
     y: 100,
-    size: 100,
+    size: 50,
     image: undefined
 };
 let tangerine = {
@@ -65,6 +68,9 @@ let bee = {
     image: undefined
 };
 
+plants.push(eggplant, lemon, mushroom, potato);
+
+// bg image
 let market = {
     image: undefined
 };
@@ -74,6 +80,8 @@ let state = `title`; // title, simulation
 // fonts used for title screen
 let futura; 
 let helvetica; 
+
+
 
 /**
  * loading all garden plants
@@ -111,6 +119,7 @@ function setup() {
  * Description of draw()
 */
 function draw() {  
+   
     //different states of the game
     if (state === `title`) {
         title();
@@ -136,30 +145,23 @@ function simulation() {
     display();
     movement();
 }
+
+let backgroundDrawn = false;
+
 function display() { 
+
     background(255);
-    if (plantCount < 10) { 
-        let placementX = random(0, 500);
-        let placementY = random(0, 500);
-    
-        image(mushroom.image, placementX, placementY, mushroom.size, mushroom.size);
-        
-        plantCount++;
-    }
-    if (plantCount < 10) { 
-        let placementX = random(0, 500);
-        let placementY = random(0, 500);
-    
-        image(tomato.image, placementX, placementY, tomato.size, tomato.size);
-        
-        plantCount++;
-    }
-    
     image(bee.image, bee.x, bee.y, bee.size, bee.size);
+
     
+    for (let i = 0; i < plants.length; i++) { 
+        image(plants[i].image, plants[i].x, plants[i].y, plants[i].size, plants[i].size);
+
+      
+    }
+    
+
 }
-// tiling of plants
-let plantCount = 0;
 
 //bee movement & acceleration
 function movement() {
