@@ -109,8 +109,9 @@ function setup() {
     market = loadImage('assets/images/finalArtboard 1.png');
 
     for (let i = 0; i < plants.length; i++) { 
-        plants[i].x = random(width,25);
-        plants[i].y = random(height, 25);
+        plants[i].x = random(50, width-50);
+        // console.log(plants[i].x);
+        plants[i].y = random(50, height-50);
        
     }
 }
@@ -127,7 +128,9 @@ function draw() {
         simulation();
     }
 }
-
+/**
+ * Title Screen
+*/
 function title() { 
     push();
     background(market);
@@ -142,14 +145,14 @@ function title() {
 function simulation() {
     display();
     movement();
+    checkOverlap();
 }
 
-let backgroundDrawn = false;
 
 function display() { 
     background(255);
     image(bee.image, bee.x, bee.y, bee.size, bee.size);
-    
+
     for (let i = 0; i < plants.length; i++) {
         image(plants[i].image, plants[i].x, plants[i].y, plants[i].size, plants[i].size);
     }
@@ -180,7 +183,18 @@ function movement() {
     bee.x = bee.x + bee.vx;
     bee.y = bee.y + bee.vy;
 
- }
+}
+ 
+function checkOverlap() { 
+    //check if circles overlap
+    for (let i = 0; i < plants.length; i++) {
+        let d = dist(bee.x, bee.y, plants[i].x, plants[i].y);
+        if (d < bee.size / 2 + plants[i].size / 2) { 
+            plants.splice(i, 1);
+            
+        }
+    }
+}
     
 function mousePressed() { 
     if (state ===  `title`) { 
