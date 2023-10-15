@@ -81,8 +81,6 @@ let state = `title`; // title, simulation
 let futura; 
 let helvetica; 
 
-
-
 /**
  * loading all garden plants
 */
@@ -97,13 +95,10 @@ function preload() {
     watermelon.image = loadImage('assets/images/Watermelon.png');
     bee.image = loadImage('assets/images/Honeybee.png');
 
-   
-    
     //fonts
     futura = loadFont('assets/fonts/FuturaStd-Medium.otf');
     helvetica = loadFont('assets/fonts/HelveticaNeueLTStd-Lt.otf');
 }
-
 
 /**
  * Description of setup
@@ -112,20 +107,23 @@ function setup() {
     createCanvas(500, 500);
     textFont(helvetica);
     market = loadImage('assets/images/finalArtboard 1.png');
-}
 
+    for (let i = 0; i < plants.length; i++) { 
+        plants[i].x = random(width,25);
+        plants[i].y = random(height, 25);
+       
+    }
+}
 
 /**
  * Description of draw()
 */
 function draw() {  
-   
     //different states of the game
     if (state === `title`) {
         title();
     }
     else if (state === `simulation`) {  
-        // background(255);
         simulation();
     }
 }
@@ -149,18 +147,12 @@ function simulation() {
 let backgroundDrawn = false;
 
 function display() { 
-
     background(255);
     image(bee.image, bee.x, bee.y, bee.size, bee.size);
-
     
-    for (let i = 0; i < plants.length; i++) { 
+    for (let i = 0; i < plants.length; i++) {
         image(plants[i].image, plants[i].x, plants[i].y, plants[i].size, plants[i].size);
-
-      
     }
-    
-
 }
 
 //bee movement & acceleration
