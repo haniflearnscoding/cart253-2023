@@ -52,7 +52,7 @@ let tomato = {
 let watermelon = {
     x: 100,
     y: 100,
-    size: 100,
+    size: 50,
     image: undefined
 };
 let bee = {
@@ -68,7 +68,7 @@ let bee = {
     image: undefined
 };
 
-plants.push(eggplant, lemon, mushroom, potato);
+plants.push(eggplant, lemon, mushroom, potato, tangerine, tomato, watermelon);
 
 // bg image
 let market = {
@@ -110,9 +110,7 @@ function setup() {
 
     for (let i = 0; i < plants.length; i++) { 
         plants[i].x = random(50, width-50);
-        // console.log(plants[i].x);
         plants[i].y = random(50, height-50);
-       
     }
 }
 
@@ -184,17 +182,46 @@ function movement() {
     bee.y = bee.y + bee.vy;
 
 }
- 
+
+let currentPlantIndex = 0;
+// define an array of different plants
+let availablePlants = [eggplant, lemon, mushroom, potato, tangerine, tomato, watermelon];
+
+let allPlantsCaught = false;
+
 function checkOverlap() { 
-    //check if circles overlap
+    // create a variable to track whether an overlap occurred
+    let overlapDetected = false;
+
     for (let i = 0; i < plants.length; i++) {
         let d = dist(bee.x, bee.y, plants[i].x, plants[i].y);
-        if (d < bee.size / 2 + plants[i].size / 2) { 
-            plants.splice(i, 1);
-            
+        if (d < bee.size / 2 + plants[i].size / 2) {
+            // replace the overlapping plant with the next available plant
+            let nextPlantIndex = (currentPlantIndex + 1) % availablePlants.length;
+            plants[i] = availablePlants[nextPlantIndex];
+            overlapDetected = true;
+
+            // update the current plant index
+            currentPlantIndex = nextPlantIndex;
+
+            // check if all plants have been caught in this round
+            if (plants.every(plant => plant === plants[0])) {
+                allPlantsCaught = true;
+            }
         }
     }
+    if (overlapDetected) {
+        currentPlantIndex = (currentPlantIndex + 1) % plants.length;
+    }
+    if (allPlantsCaught) {
+        for (let i = 0; i < plants.length; i++) {
+            plants[i].x = random(50, width - 50);
+            plants[i].y = random(50, height - 50);
+        }
+        allPlantsCaught = false;
+    }
 }
+
     
 function mousePressed() { 
     if (state ===  `title`) { 
