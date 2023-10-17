@@ -155,7 +155,9 @@ function title() {
     text(`Click to start`, width / 18, height / 2);
     pop();
 }
-
+/**
+ * end screen
+*/
 function end() { 
     push();
     background(255);
@@ -222,8 +224,9 @@ function movement() {
 
 }
 
-
-
+/**
+ * when bee touches plant
+*/
 function checkOverlap() { 
     // create a variable to track whether an overlap occurred
     let overlapDetected = false;
@@ -258,13 +261,17 @@ function checkOverlap() {
     }
 }
 
-    
+/**
+ * start of game function
+*/  
 function mousePressed() { 
     if (state ===  `title`) { 
         state = `simulation`;
     }
 }
-
+/**
+ * end of game function
+*/  
 function ending() { 
     const accelerationThreshold = 5;
 
