@@ -1,3 +1,9 @@
-# Template p5 project
+# Project 1: Bee Simulator
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+by Hanif Hashim
+
+Bee simulator using p5 library, coded in js.
+
+Attributions:
+-Movement function
+https://pippinbarr.com/cart253/topics/movement/movement.html
