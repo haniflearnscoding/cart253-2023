@@ -3,7 +3,8 @@
  * Hanif Hashim
  * 
  * Gardening simulator using js p5 library
-
+ * Emoji Credit: Figma Apple Emoji Pack
+ * https://www.figma.com/file/DdBM5Ik7itHOepCG3ifXnV/Emoji-Mega-Pack-(3%2C900-iOS-Apple-Emojis)-(Community)?type=design&node-id=10-25109&mode=design&t=JpnMLBYpLKIUXsEM-0
  */
 
 "use strict";
@@ -70,7 +71,7 @@ let bee = {
 };
 
 // add all plants to plants array
-plants.push(eggplant, lemon, mushroom, potato, tangerine, tomato, watermelon);
+plants.push(eggplant, lemon, mushroom, potato);
 
 // bg image
 let market = {
@@ -85,8 +86,11 @@ let helvetica;
 
 let currentPlantIndex = 0;
 // define an array of different plants
-let availablePlants = [eggplant, lemon, mushroom, potato, tangerine, tomato, watermelon];
-let allPlantsCaught = false;
+let availablePlants = [tangerine, tomato, watermelon];
+// let allPlantsCaught = false;
+//
+const accelerationThreshold = 5;
+
 
 /**
  * loading all garden plants
@@ -172,6 +176,7 @@ function end() {
  * calling other functions that make gameplay
 */
 function simulation() {
+    //move then display
     display();
     movement();
     checkOverlap();
@@ -190,6 +195,7 @@ function display() {
 
     //plants
     for (let i = 0; i < plants.length; i++) {
+        console.log(plants[i].x, plants[i].y);
         image(plants[i].image, plants[i].x, plants[i].y, plants[i].size, plants[i].size);
     }
 }
@@ -226,39 +232,52 @@ function movement() {
 
 /**
  * when bee touches plant
+ * Modulo is a mathematical operation that returns the remainder of a division of two arguments.
 */
+
 function checkOverlap() { 
     // create a variable to track whether an overlap occurred
     let overlapDetected = false;
 
+    //go through each plant displayed
     for (let i = 0; i < plants.length; i++) {
-        let d = dist(bee.x, bee.y, plants[i].x, plants[i].y);
+        
+        //when bee contacts plant
+        let d = dist(bee.x, bee.y, plants[i].x, plants[i].y)
         if (d < bee.size / 2 + plants[i].size / 2) {
             // replace the overlapping plant with the next available plant
-            let nextPlantIndex = (currentPlantIndex + 1) % availablePlants.length;
-            plants[i] = availablePlants[nextPlantIndex];
+            // let nextPlantIndex = (currentPlantIndex + 1) % availablePlants.length;
+            // console.log(nextPlantIndex);
+            let poliPlant = plants[i];
+            let randomPlantIndex = floor(random(0, availablePlants.length));
+            plants[i] = availablePlants[randomPlantIndex];
+            availablePlants.splice(randomPlantIndex, 1);
+
+            plants[i].x = random(50, width - 50);
+            plants[i].y = random(50, height - 50);
+            availablePlants.push(poliPlant);
             overlapDetected = true;
             bee.acceleration += 0.1;
 
             // update the current plant index
-            currentPlantIndex = nextPlantIndex;
+            // currentPlantIndex = nextPlantIndex;
 
             // check if all plants have been caught in this round
-            if (plants.every(plant => plant === plants[0])) {
-                allPlantsCaught = true;
-            }
+            // if (plants.every(plant => plant === plants[0])) {
+            //     allPlantsCaught = true;
+            // }
         }
     }
-    if (overlapDetected) {
-        currentPlantIndex = (currentPlantIndex + 1) % plants.length;
-    }
-    if (allPlantsCaught) {
-        for (let i = 0; i < plants.length; i++) {
-            plants[i].x = random(50, width - 50);
-            plants[i].y = random(50, height - 50);
-        }
-        allPlantsCaught = false;
-    }
+    // if (overlapDetected) {
+    //     currentPlantIndex = (currentPlantIndex + 1) % plants.length;
+    // }
+    // if (allPlantsCaught) {
+    //     for (let i = 0; i < plants.length; i++) {
+    //         plants[i].x = random(50, width - 50);
+    //         plants[i].y = random(50, height - 50);
+    //     }
+    //     allPlantsCaught = false;
+    // }
 }
 
 /**
@@ -273,10 +292,7 @@ function mousePressed() {
  * end of game function
 */  
 function ending() { 
-    const accelerationThreshold = 5;
-
     if (bee.acceleration >= accelerationThreshold) {
         state = "end";
     }
-
 }
