@@ -55,6 +55,7 @@ let watermelon = {
     size: 50,
     image: undefined
 };
+// user
 let bee = {
     x: 100,
     y: 100,
@@ -68,6 +69,7 @@ let bee = {
     image: undefined
 };
 
+// add all plants to plants array
 plants.push(eggplant, lemon, mushroom, potato, tangerine, tomato, watermelon);
 
 // bg image
@@ -80,6 +82,11 @@ let state = `title`; // title, simulation
 // fonts used for title screen
 let futura; 
 let helvetica; 
+
+let currentPlantIndex = 0;
+// define an array of different plants
+let availablePlants = [eggplant, lemon, mushroom, potato, tangerine, tomato, watermelon];
+let allPlantsCaught = false;
 
 /**
  * loading all garden plants
@@ -101,13 +108,18 @@ function preload() {
 }
 
 /**
- * Description of setup
+ * setup canvas & plants
 */
 function setup() {
     createCanvas(500, 500);
+
+    // font used in title screen
     textFont(helvetica);
+
+    //img loaded for title screen
     market = loadImage('assets/images/finalArtboard 1.png');
 
+    //place plants on canvas random
     for (let i = 0; i < plants.length; i++) { 
         plants[i].x = random(50, width-50);
         plants[i].y = random(50, height-50);
@@ -115,48 +127,73 @@ function setup() {
 }
 
 /**
- * Description of draw()
+ * go through different states of the game
 */
 function draw() {  
-    //different states of the game
+
     if (state === `title`) {
         title();
     }
     else if (state === `simulation`) {  
         simulation();
     }
+    else if (state === `end`) {  
+        end();
+    }
 }
 /**
- * Title Screen
+ * title screen
 */
 function title() { 
     push();
     background(market);
-    textSize(22); 
+    textSize(17); 
     fill(0);
     textAlign(LEFT);
-    text(`Garden Simulator`, width / 18, height / 6);
-    text(`Click to start`, width / 18, height / 4);
+    text(`Bee Simulator`, width / 18, height / 6);
+    text(`Go around polinating plants!`, width / 18, height / 4);
+    text(`Click to start`, width / 18, height / 2);
     pop();
 }
 
+function end() { 
+    push();
+    background(255);
+    textSize(22); 
+    fill(0);
+    textAlign(CENTER);
+    text(`The bee has died`, width / 2, height / 2);
+    pop();
+}
+
+/**
+ * calling other functions that make gameplay
+*/
 function simulation() {
     display();
     movement();
     checkOverlap();
+    ending();
 }
 
-
-function display() { 
+/**
+ * renders all elements of game
+*/
+function display() {
+    //white bg
     background(255);
+
+    //bee
     image(bee.image, bee.x, bee.y, bee.size, bee.size);
 
+    //plants
     for (let i = 0; i < plants.length; i++) {
         image(plants[i].image, plants[i].x, plants[i].y, plants[i].size, plants[i].size);
     }
 }
-
-//bee movement & acceleration
+/**
+ * bee movement & acceleration
+*/
 function movement() {
 
     if (mouseX > bee.x) {
@@ -173,6 +210,8 @@ function movement() {
         bee.ay = -bee.acceleration;
     }
 
+    //update velocity based on acceleration
+    //contrain velocity to not exceed mac speed
     bee.vx = bee.vx + bee.ax;
     bee.vx = constrain(bee.vx, -bee.maxSpeed, bee.maxSpeed);
     bee.vy = bee.vy + bee.ay;
@@ -183,11 +222,7 @@ function movement() {
 
 }
 
-let currentPlantIndex = 0;
-// define an array of different plants
-let availablePlants = [eggplant, lemon, mushroom, potato, tangerine, tomato, watermelon];
 
-let allPlantsCaught = false;
 
 function checkOverlap() { 
     // create a variable to track whether an overlap occurred
@@ -200,6 +235,7 @@ function checkOverlap() {
             let nextPlantIndex = (currentPlantIndex + 1) % availablePlants.length;
             plants[i] = availablePlants[nextPlantIndex];
             overlapDetected = true;
+            bee.acceleration += 0.1;
 
             // update the current plant index
             currentPlantIndex = nextPlantIndex;
@@ -229,6 +265,11 @@ function mousePressed() {
     }
 }
 
+function ending() { 
+    const accelerationThreshold = 5;
 
+    if (bee.acceleration >= accelerationThreshold) {
+        state = "end";
+    }
 
-
+}
