@@ -147,11 +147,11 @@ function draw() {
 function title() { 
     push();
     background(market);
-    textSize(17); 
+    textSize(20); 
     fill(0);
     textAlign(LEFT);
     text(`Bee Simulator`, width / 18, height / 6);
-    text(`Go around polinating plants!`, width / 18, height / 4);
+    text(`Go polinate plants!`, width / 18, height / 4);
     text(`Click to start`, width / 18, height / 2);
     pop();
 }
@@ -162,7 +162,7 @@ function end() {
     textSize(22); 
     fill(0);
     textAlign(CENTER);
-    text(`The bee has died`, width / 2, height / 2);
+    text(`The bee has polinated the garden!`, width / 2, height / 2);
     pop();
 }
 
