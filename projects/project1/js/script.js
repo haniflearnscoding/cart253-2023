@@ -3,8 +3,11 @@
  * Hanif Hashim
  * 
  * Gardening simulator using js p5 library
- * Emoji Credit: Figma Apple Emoji Pack
- * https://www.figma.com/file/DdBM5Ik7itHOepCG3ifXnV/Emoji-Mega-Pack-(3%2C900-iOS-Apple-Emojis)-(Community)?type=design&node-id=10-25109&mode=design&t=JpnMLBYpLKIUXsEM-0
+ * 
+ * Emoji assets attribution: Figma Apple Emoji Pack
+ * https://www.figma.com/community/file/937774188065101204
+ * 
+ * 
  */
 
 "use strict";
@@ -56,7 +59,7 @@ let watermelon = {
     size: 50,
     image: undefined
 };
-// user
+// object for user - bee
 let bee = {
     x: 100,
     y: 100,
@@ -64,8 +67,8 @@ let bee = {
     vy: 0,
     ax: 0,
     ay: 0,
-    maxSpeed: 10,
-    acceleration: 0.5,
+    maxSpeed: 20,
+    acceleration: 1,
     size: 50,
     image: undefined
 };
@@ -78,22 +81,25 @@ let market = {
     image: undefined
 };
 
-let state = `title`; // title, simulation
+// title, simulation, end
+let state = `title`; 
 
 // fonts used for title screen
 let futura; 
 let helvetica; 
 
-let currentPlantIndex = 0;
 // define an array of different plants
 let availablePlants = [tangerine, tomato, watermelon];
-// let allPlantsCaught = false;
-//
-const accelerationThreshold = 5;
+
+// acceleration of bee at which ending is triggered
+const accelerationThreshold = 10;
+
+// variable for polinated plants
+let poliPlant;
 
 
 /**
- * loading all garden plants
+ * load all garden plants
 */
 function preload() {
     //images
@@ -117,13 +123,13 @@ function preload() {
 function setup() {
     createCanvas(500, 500);
 
-    // font used in title screen
+    //font used in title screen
     textFont(helvetica);
 
     //img loaded for title screen
     market = loadImage('assets/images/finalArtboard 1.png');
 
-    //place plants on canvas random
+    //place plants on canvas in random positions
     for (let i = 0; i < plants.length; i++) { 
         plants[i].x = random(50, width-50);
         plants[i].y = random(50, height-50);
@@ -134,7 +140,6 @@ function setup() {
  * go through different states of the game
 */
 function draw() {  
-
     if (state === `title`) {
         title();
     }
@@ -150,10 +155,15 @@ function draw() {
 */
 function title() { 
     push();
+    //set the bg img as the market
     background(market);
+
+    //text settings 
     textSize(20); 
     fill(0);
     textAlign(LEFT);
+
+    //text content & placement
     text(`Bee Simulator`, width / 18, height / 6);
     text(`Go polinate plants!`, width / 18, height / 4);
     text(`Click to start`, width / 18, height / 2);
@@ -164,10 +174,15 @@ function title() {
 */
 function end() { 
     push();
+    //set the bg img white
     background(255);
+
+    //text settings 
     textSize(22); 
     fill(0);
     textAlign(CENTER);
+
+    //text content & placement
     text(`The bee has polinated the garden!`, width / 2, height / 2);
     pop();
 }
@@ -176,9 +191,8 @@ function end() {
  * calling other functions that make gameplay
 */
 function simulation() {
-    //move then display
-    display();
     movement();
+    display();
     checkOverlap();
     ending();
 }
@@ -187,15 +201,14 @@ function simulation() {
  * renders all elements of game
 */
 function display() {
-    //white bg
+    //set bg as white
     background(255);
 
-    //bee
+    //display bee
     image(bee.image, bee.x, bee.y, bee.size, bee.size);
 
-    //plants
+    //display plants from array
     for (let i = 0; i < plants.length; i++) {
-        console.log(plants[i].x, plants[i].y);
         image(plants[i].image, plants[i].x, plants[i].y, plants[i].size, plants[i].size);
     }
 }
@@ -204,86 +217,82 @@ function display() {
 */
 function movement() {
 
+    // if mouse is to the right of circle position 
     if (mouseX > bee.x) {
+        // set bee's acceleration to positive to move to the right
         bee.ax = bee.acceleration;
     }
+    // if mouse is to the left of circle position
     else if (mouseX < bee.x) { 
+        // set bee's acceleration to negative to move to the left
         bee.ax = -bee.acceleration;
     }
-
+    // if mouse is below the circle position
     if (mouseY > bee.y) {
+        // set bee's acceleration to positive to move it down
         bee.ay = bee.acceleration;
     }
+    // if mouse is above the circle position
     else if (mouseY < bee.y) { 
+        // set bee's acceleration to negative to move it up
         bee.ay = -bee.acceleration;
     }
 
     //update velocity based on acceleration
-    //contrain velocity to not exceed mac speed
+    //contrain velocity to not exceed max speed
     bee.vx = bee.vx + bee.ax;
     bee.vx = constrain(bee.vx, -bee.maxSpeed, bee.maxSpeed);
     bee.vy = bee.vy + bee.ay;
     bee.vy = constrain(bee.vy, -bee.maxSpeed, bee.maxSpeed);
 
+    //change vx & vy to circle position
     bee.x = bee.x + bee.vx;
     bee.y = bee.y + bee.vy;
 
 }
 
 /**
- * when bee touches plant
- * Modulo is a mathematical operation that returns the remainder of a division of two arguments.
+ * when bee overlaps plant
 */
 
 function checkOverlap() { 
-    // create a variable to track whether an overlap occurred
-    let overlapDetected = false;
-
-    //go through each plant displayed
+    //go through each plant in array
     for (let i = 0; i < plants.length; i++) {
-        
-        //when bee contacts plant
+
+        //distance between bee and plant
         let d = dist(bee.x, bee.y, plants[i].x, plants[i].y)
+
+        //if distance is less than radius of bee & plant, they overlap
         if (d < bee.size / 2 + plants[i].size / 2) {
-            // replace the overlapping plant with the next available plant
-            // let nextPlantIndex = (currentPlantIndex + 1) % availablePlants.length;
-            // console.log(nextPlantIndex);
-            let poliPlant = plants[i];
+
+            // assign polinated plant to variable
+            poliPlant = plants[i];
+
+            //have an index for next plant 
             let randomPlantIndex = floor(random(0, availablePlants.length));
             plants[i] = availablePlants[randomPlantIndex];
+
+            //remove polinated plant from available plants
             availablePlants.splice(randomPlantIndex, 1);
 
+            //place next plant randomly
             plants[i].x = random(50, width - 50);
             plants[i].y = random(50, height - 50);
+
+            //add non-polinated plant to polinated plants
             availablePlants.push(poliPlant);
-            overlapDetected = true;
-            bee.acceleration += 0.1;
-
-            // update the current plant index
-            // currentPlantIndex = nextPlantIndex;
-
-            // check if all plants have been caught in this round
-            // if (plants.every(plant => plant === plants[0])) {
-            //     allPlantsCaught = true;
-            // }
+            
+            // add acceleration to bee each plant overlap
+            bee.acceleration += 0.3;
         }
     }
-    // if (overlapDetected) {
-    //     currentPlantIndex = (currentPlantIndex + 1) % plants.length;
-    // }
-    // if (allPlantsCaught) {
-    //     for (let i = 0; i < plants.length; i++) {
-    //         plants[i].x = random(50, width - 50);
-    //         plants[i].y = random(50, height - 50);
-    //     }
-    //     allPlantsCaught = false;
-    // }
 }
 
 /**
  * start of game function
 */  
 function mousePressed() { 
+    // if mouse is pressed, trigger simulation
     if (state ===  `title`) { 
         state = `simulation`;
     }
@@ -292,6 +301,7 @@ function mousePressed() {
  * end of game function
 */  
 function ending() { 
+    // if bee acceleration reaches threshold, trigger end simulation
     if (bee.acceleration >= accelerationThreshold) {
         state = "end";
     }
