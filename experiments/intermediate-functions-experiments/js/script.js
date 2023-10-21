@@ -1,81 +1,34 @@
 "use strict";
 
-let school = []; // Create an empty array and assign it to the school variable
-let schoolSize = 1;
+// An array of different playback rates to use with our dog bark
+// 1 means normal rate, greater than one increases the speed and pitch
+// So 3 is three times faster with a correspondingly higher pitch.
+let rates = [1.5, 1.75, 2.25, 2.5, 2.75, 3];
 
-// Our fish
-let fish1;
-let fish2;
-let fish3;
-let fish4;
+// Our sound effect
+let barkSFX;
 
+// preload() loads the barking sound effect
+function preload() {
+  barkSFX = loadSound(`assets/sounds/bark.wav`);
+}
+
+// setup() the canvas ready
 function setup() {
   createCanvas(600, 600);
-
-  for (let i = 0; i < schoolSize; i++) {
-    school[i] = createFish(random(0, width), random(0, height));
-  }
-
 }
 
-// createFish(x,y)
-// Creates a new JavaScript Object describing a fish and returns it
-function createFish(x, y) {
-  let fish = {
-    x: x,
-    y: y,
-    size: 50,
-    vx: 0,
-    vy: 0,
-    speed: 2
-  };
-  return fish;
-}
-
-// draw()
-// Moves and displays our fish
+// draw() does nothing much
 function draw() {
   background(0);
-
-  for (let i = 0; i < school.length; i++) {
-    moveFish(school[i]);
-    displayFish(school[i]);
-  }
-  
 }
 
-// moveFish(fish)
-// Chooses whether the provided fish changes direction and moves it
-function moveFish(fish) {
-  // Choose whether to change direction
-  let change = random(0, 1);
-  if (change < 0.05) {
-    fish.vx = random(-fish.speed, fish.speed);
-    fish.vy = random(-fish.speed, fish.speed);
-  }
-
-  // Move the fish
-  fish.x = fish.x + fish.vx;
-  fish.y = fish.y + fish.vy;
-
-  // Constrain the fish to the canvas
-  fish.x = constrain(fish.x, 0, width);
-  fish.y = constrain(fish.y, 0, height);
-}
-
-// displayFish(fish)
-// Displays the provided fish on the canvas
-function displayFish(fish) {
-  push();
-  fill(200, 100, 100);
-  noStroke();
-  ellipse(fish.x, fish.y, fish.size);
-  pop();
-}
-
+// mousePressed() plays a dog bark at a randomly chosen rate
 function mousePressed() {
-    let fish = createFish(mouseX,mouseY); // Create a fish at the mouse position
-    school.push(fish); // Add the fish to our array
-    // Now the school array has our new fish and it will be moved and drawn
-    // with all the others in the for loop!
-  }
+  // Choose a random rate from the array
+  let barkRate = random(rates);
+  // Set the barking sound effect to that rate
+  barkSFX.rate(barkRate);
+  // Play the barking sound effect
+  barkSFX.play();
+}
