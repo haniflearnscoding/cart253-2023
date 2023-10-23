@@ -10,6 +10,15 @@
 
 let school = []; // Create an empty array and assign it to the school variable
 let schoolSize = 1;
+// user js object
+let user = {
+    x: 300,
+    y: 300,
+    size: 50,
+    vx: 0,
+    vy: 0,
+    speed: 2
+}
 
 // Our fish
 let fish1;
@@ -46,6 +55,28 @@ function draw() {
       moveFish(school[i]);
       displayFish(school[i]);
     }
+
+    //user direction with key arrows
+    //left
+    if (keyIsDown(65)) {
+        user.x = user.x - 5;
+    }
+    //right
+    else if (keyIsDown(68)) {
+        user.x = user.x + 5;
+    }
+    //
+    else if (keyIsDown(87)) {
+        user.y = user.y - 5;
+    }
+    //down
+    else if (keyIsDown(83)) {
+        user.y = user.y + 5;
+    }
+
+    //fill and draw user
+    fill(255);
+    ellipse(user.x, user.y, user.size);
 }
 
 // Chooses whether the provided fish changes direction and moves it
@@ -79,3 +110,12 @@ function displayFish(fish) {
       // Now the school array has our new fish and it will be moved and drawn
       // with all the others in the for loop!
 }
+
+function keyPressed() {
+    if (keyCode === ENTER) {
+        // fill(user.fill);
+        // ellipse(user.x, user.y, user.size);
+        console.log("test");
+        
+    }
+  }
