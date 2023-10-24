@@ -10,6 +10,7 @@
 
 let school = []; // Create an empty array and assign it to the school variable
 let schoolSize = 1;
+let schoolSpeed = 2;
 // user js object
 let user = {
     x: 300,
@@ -21,13 +22,15 @@ let user = {
 }
 
 // Our fish
-let fish1;
-let fish2;
-let fish3;
-let fish4;
+// let fish1;
+// let fish2;
+// let fish3;
+// let fish4;
 
 // title, simulation, end
 let state = `title`; 
+
+
 
 function setup() {
   createCanvas(600, 600);
@@ -45,7 +48,12 @@ function createFish(x, y) {
       size: 50,
       vx: 0,
       vy: 0,
-      speed: 2
+      speed: schoolSpeed,
+      r: random(40, 255),
+      g: random(40, 255),
+      b: random(40, 255)
+      
+      
     };
     return fish;
 }
@@ -58,6 +66,9 @@ function draw() {
     }
     else if (state === `simulation`) {  
         simulation();
+    }
+    else if (state === `end`) {  
+        end();
     }
 
     
@@ -79,6 +90,22 @@ function title() {
     textSize(22);
     text(`WASD to move`, width / 2, height / 1.5);
     text(`Click to spawn fishies`, width / 2, height / 1.35);
+    pop();
+}
+
+function end() { 
+    push();
+    //set the bg img white
+    background(0);
+
+    //text settings 
+    
+    fill(255);
+    textAlign(CENTER);
+
+    //text content & placement
+    textSize(40);
+    text(`End`, width / 2, height / 2);
     pop();
 }
 
@@ -112,7 +139,7 @@ function moveFish(fish) {
 // Displays the provided fish on the canvas
 function displayFish(fish) {
     push();
-    fill(200, 100, 100);
+    fill(fish.r, fish.g, fish.b);
     noStroke();
     ellipse(fish.x, fish.y, fish.size);
     pop();
@@ -126,8 +153,8 @@ function mousePressed() {
     }
     let fish = createFish(mouseX,mouseY); // Create a fish at the mouse position
     school.push(fish); // Add the fish to our array
-    // Now the school array has our new fish and it will be moved and drawn
-    // with all the others in the for loop!
+    checkEnding();
+    
 }
 
 function displayUser() {
@@ -163,13 +190,24 @@ function movement() {
 
 function checkOverlap() { 
     for (let i = 0; i < school.length; i++) {
-        
-        //distance between bee and plant
+
+        //distance between user and fish
         let d = dist(user.x, user.y, school[i].x, school[i].y)
 
         //if distance is less than radius of bee & plant, they overlap
         if (d < user.size / 2 + school[i].size / 2) {
             school.splice(i, 1);
+            schoolSpeed += 10;
+            for (let i = 0; i < school.length; i++){
+                school[i].speed = schoolSpeed;
+            }
+
         }
+    }
+}
+
+function checkEnding() { 
+    if (school.length >= 15) {
+        state = `end`;
     }
 }
