@@ -90,6 +90,7 @@ function simulation() {
     }
     displayUser();
     movement();
+    checkOverlap();
 }
 
 // Chooses whether the provided fish changes direction and moves it
@@ -153,5 +154,22 @@ function movement() {
     //down
     else if (keyIsDown(83)) {
         user.y = user.y + 5;
+    }
+
+    //constrain user to canvas
+    user.x = constrain(user.x, 0, width);
+    user.y = constrain(user.y, 0, height);
+}
+
+function checkOverlap() { 
+    for (let i = 0; i < school.length; i++) {
+        
+        //distance between bee and plant
+        let d = dist(user.x, user.y, school[i].x, school[i].y)
+
+        //if distance is less than radius of bee & plant, they overlap
+        if (d < user.size / 2 + school[i].size / 2) {
+            school.splice(i, 1);
+        }
     }
 }
