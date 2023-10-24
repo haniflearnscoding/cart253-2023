@@ -67,8 +67,11 @@ function draw() {
     else if (state === `simulation`) {  
         simulation();
     }
-    else if (state === `end`) {  
-        end();
+    else if (state === `firstEnding`) {  
+        firstEnding();
+    }
+    else if (state === `secondEnding`) {  
+        secondEnding();
     }
 
     
@@ -93,19 +96,33 @@ function title() {
     pop();
 }
 
-function end() { 
+function firstEnding() { 
     push();
     //set the bg img white
     background(0);
 
     //text settings 
-    
+    fill(255);
+    textAlign(CENTER);
+
+    //text content & placement
+    textSize(30);
+    text(`Too many fish in the tank! Slow Down`, width / 2, height / 2);
+    pop();
+}
+
+function secondEnding() { 
+    push();
+    //set the bg img white
+    background(0);
+
+    //text settings 
     fill(255);
     textAlign(CENTER);
 
     //text content & placement
     textSize(40);
-    text(`End`, width / 2, height / 2);
+    text(`All the food for today`, width / 2, height / 2);
     pop();
 }
 
@@ -197,17 +214,19 @@ function checkOverlap() {
         //if distance is less than radius of bee & plant, they overlap
         if (d < user.size / 2 + school[i].size / 2) {
             school.splice(i, 1);
-            schoolSpeed += 10;
+            schoolSpeed += 2;
             for (let i = 0; i < school.length; i++){
                 school[i].speed = schoolSpeed;
             }
-
         }
     }
 }
 
 function checkEnding() { 
     if (school.length >= 15) {
-        state = `end`;
+        state = `firstEnding`;
+    }
+    if (schoolSpeed >= 4){
+        state = `secondEnding`;
     }
 }
