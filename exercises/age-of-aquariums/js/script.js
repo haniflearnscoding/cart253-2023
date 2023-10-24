@@ -26,6 +26,9 @@ let fish2;
 let fish3;
 let fish4;
 
+// title, simulation, end
+let state = `title`; 
+
 function setup() {
   createCanvas(600, 600);
   for (let i = 0; i < schoolSize; i++) {
@@ -48,35 +51,45 @@ function createFish(x, y) {
 }
 
 // draw()
-// Moves and displays our fish
 function draw() {
     background(0);
+    if (state === `title`) {
+        title();
+    }
+    else if (state === `simulation`) {  
+        simulation();
+    }
+
+    
+}
+
+function title() { 
+    push();
+    //set the bg img white
+    background(0);
+
+    //text settings 
+    
+    fill(255);
+    textAlign(CENTER);
+
+    //text content & placement
+    textSize(40);
+    text(`CATCH THE FISHIES`, width / 2, height / 2);
+    textSize(22);
+    text(`WASD to move`, width / 2, height / 1.5);
+    text(`Click to spawn fishies`, width / 2, height / 1.35);
+    pop();
+}
+
+
+function simulation() { 
     for (let i = 0; i < school.length; i++) {
       moveFish(school[i]);
       displayFish(school[i]);
     }
-
-    //user direction with key arrows
-    //left
-    if (keyIsDown(65)) {
-        user.x = user.x - 5;
-    }
-    //right
-    else if (keyIsDown(68)) {
-        user.x = user.x + 5;
-    }
-    //
-    else if (keyIsDown(87)) {
-        user.y = user.y - 5;
-    }
-    //down
-    else if (keyIsDown(83)) {
-        user.y = user.y + 5;
-    }
-
-    //fill and draw user
-    fill(255);
-    ellipse(user.x, user.y, user.size);
+    displayUser();
+    movement();
 }
 
 // Chooses whether the provided fish changes direction and moves it
@@ -104,18 +117,41 @@ function displayFish(fish) {
     pop();
 }
 
-  function mousePressed() {
-      let fish = createFish(mouseX,mouseY); // Create a fish at the mouse position
-      school.push(fish); // Add the fish to our array
-      // Now the school array has our new fish and it will be moved and drawn
-      // with all the others in the for loop!
+
+function mousePressed() {
+    // if mouse is pressed, trigger simulation
+    if (state ===  `title`) { 
+        state = `simulation`;
+    }
+    let fish = createFish(mouseX,mouseY); // Create a fish at the mouse position
+    school.push(fish); // Add the fish to our array
+    // Now the school array has our new fish and it will be moved and drawn
+    // with all the others in the for loop!
 }
 
-function keyPressed() {
-    if (keyCode === ENTER) {
-        // fill(user.fill);
-        // ellipse(user.x, user.y, user.size);
-        console.log("test");
-        
+function displayUser() {
+    //fill and draw user
+    fill(255);
+    noStroke();
+    ellipse(user.x, user.y, user.size);
+}
+
+function movement() { 
+    //user direction with key arrows
+    //left
+    if (keyIsDown(65)) {
+        user.x = user.x - 5;
     }
-  }
+    //right
+    else if (keyIsDown(68)) {
+        user.x = user.x + 5;
+    }
+    //
+    else if (keyIsDown(87)) {
+        user.y = user.y - 5;
+    }
+    //down
+    else if (keyIsDown(83)) {
+        user.y = user.y + 5;
+    }
+}
