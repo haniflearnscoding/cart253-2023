@@ -1,16 +1,18 @@
 /**
- * Title of Project
- * Author Name
+ * E4: Age of Aquariums
+ * Hanif Hashim
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
+ *
  */
 
 "use strict";
 
 let school = []; // Create an empty array and assign it to the school variable
-let schoolSize = 1;
+
+//school variables
+let schoolSize = 1; 
 let schoolSpeed = 2;
+
 // user js object
 let user = {
     x: 300,
@@ -21,17 +23,10 @@ let user = {
     speed: 2
 }
 
-// Our fish
-// let fish1;
-// let fish2;
-// let fish3;
-// let fish4;
-
-// title, simulation, end
+// title, simulation, firstEnding, secondEnding
 let state = `title`; 
 
-
-
+// canvas and create fish in array
 function setup() {
   createCanvas(600, 600);
   for (let i = 0; i < schoolSize; i++) {
@@ -39,8 +34,8 @@ function setup() {
   }
 }
 
-// createFish(x,y)
-// Creates a new JavaScript Object describing a fish and returns it
+
+// creates a new JavaScript Object describing a fish and returns it
 function createFish(x, y) {
     let fish = {
       x: x,
@@ -58,7 +53,7 @@ function createFish(x, y) {
     return fish;
 }
 
-// draw()
+// bg and different states
 function draw() {
     background(0);
     if (state === `title`) {
@@ -77,13 +72,14 @@ function draw() {
     
 }
 
+// title screen
 function title() { 
     push();
-    //set the bg img white
+
+    //set the bg img black
     background(0);
 
     //text settings 
-    
     fill(255);
     textAlign(CENTER);
 
@@ -96,6 +92,7 @@ function title() {
     pop();
 }
 
+// first end screen
 function firstEnding() { 
     push();
     //set the bg img white
@@ -111,9 +108,10 @@ function firstEnding() {
     pop();
 }
 
+// second end screen
 function secondEnding() { 
     push();
-    //set the bg img white
+    //set the bg img black
     background(0);
 
     //text settings 
@@ -126,7 +124,7 @@ function secondEnding() {
     pop();
 }
 
-
+// calling different functions for simulation
 function simulation() { 
     for (let i = 0; i < school.length; i++) {
       moveFish(school[i]);
@@ -137,23 +135,23 @@ function simulation() {
     checkOverlap();
 }
 
-// Chooses whether the provided fish changes direction and moves it
+// chooses whether the provided fish changes direction and moves it
 function moveFish(fish) {
-    // Choose whether to change direction
+    // choose whether to change direction
     let change = random(0, 1);
     if (change < 0.05) {
       fish.vx = random(-fish.speed, fish.speed);
       fish.vy = random(-fish.speed, fish.speed);
     }
-    // Move the fish
+    // move fish
     fish.x = fish.x + fish.vx;
     fish.y = fish.y + fish.vy;
-    // Constrain the fish to the canvas
+    // constrain fish to the canvas
     fish.x = constrain(fish.x, 0, width);
     fish.y = constrain(fish.y, 0, height);
 }
 
-// Displays the provided fish on the canvas
+// displays the provided fish on the canvas
 function displayFish(fish) {
     push();
     fill(fish.r, fish.g, fish.b);
@@ -162,27 +160,34 @@ function displayFish(fish) {
     pop();
 }
 
-
+// start simulation
 function mousePressed() {
     // if mouse is pressed, trigger simulation
     if (state ===  `title`) { 
         state = `simulation`;
     }
-    let fish = createFish(mouseX,mouseY); // Create a fish at the mouse position
-    school.push(fish); // Add the fish to our array
+    // create a fish at the mouse position
+    let fish = createFish(mouseX,mouseY); 
+
+    // add the fish to our array
+    school.push(fish); 
+
+    // call to ending function
     checkEnding();
     
 }
 
+
+//fill and draw user
 function displayUser() {
-    //fill and draw user
     fill(255);
     noStroke();
     ellipse(user.x, user.y, user.size);
 }
 
+// user movement direction
 function movement() { 
-    //user direction with key arrows
+    //key arrows
     //left
     if (keyIsDown(65)) {
         user.x = user.x - 5;
@@ -205,6 +210,7 @@ function movement() {
     user.y = constrain(user.y, 0, height);
 }
 
+// user and fish overlap function
 function checkOverlap() { 
     for (let i = 0; i < school.length; i++) {
 
@@ -222,10 +228,13 @@ function checkOverlap() {
     }
 }
 
+// trigger ending states function
 function checkEnding() { 
+    // if too many fishes
     if (school.length >= 15) {
         state = `firstEnding`;
     }
+    // once done eatin
     if (schoolSpeed >= 4){
         state = `secondEnding`;
     }
