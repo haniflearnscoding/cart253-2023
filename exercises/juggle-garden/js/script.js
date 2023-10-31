@@ -12,11 +12,15 @@ let garden = {
   // An array to store the individual flowers
   flowers: [],
   // How many flowers in the garden
-  numFlowers: 40,
+  numFlowers: 10,
   // An array to our the bees
   bees: [],
   // How many bees in the garden
-  numBees: 10,
+  numBees: 5,
+  // An array to store the individual clouds
+  clouds: [],
+  // How many flowers in the garden
+  numClouds: 5,
   // The color of the grass (background)
   grassColor: {
     r: 120,
@@ -58,6 +62,19 @@ function setup() {
     garden.bees.push(bee);
   }
 
+  // Create our clouds by counting up to the number of clouds
+  for (let i = 0; i < garden.numClouds; i++) {
+    // Create variables for our arguments for clarity
+    let x = random(0, width);
+    let y = random(0, height);
+    // Create a new cloud using the arguments
+    let cloud = new Cloud(x, y);
+    // Add the cloud to the array of clouds
+    garden.clouds.push(cloud);
+  }
+  
+    
+
 }
 
 // draw()
@@ -80,6 +97,7 @@ function draw() {
   // Loop through all the bees in the array and display them
   for (let i = 0; i < garden.bees.length; i++) {
     let bee = garden.bees[i];
+    let userBee = garden.bees[0];
     // Check if this flower is alive
     if (bee.alive) {
       // Shrink and move the bee
@@ -97,6 +115,20 @@ function draw() {
       // Display the bee
       bee.display();
     }
-  }
+
+    // user control with mouse coordinates
+    userBee.x = mouseX;
+    userBee.y = mouseY;
+    
+    }
+    // Loop through all the clouds in the array and display them
+    for (let i = 0; i < garden.clouds.length; i++) {
+        let cloud = garden.clouds[i];
+        // console.log(cloud);
+        
+        // Display the clouds
+        cloud.display();
+        
+    }
 
 }
