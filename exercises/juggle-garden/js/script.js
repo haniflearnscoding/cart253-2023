@@ -95,6 +95,7 @@ function draw() {
 
 }
 
+//First ending screen
 function end() { 
   push();
   //set the bg img white
@@ -110,6 +111,7 @@ function end() {
   pop();
 }
 
+//Second ending screen
 function end2() { 
   push();
   //set the bg img white
@@ -125,6 +127,7 @@ function end2() {
   pop();
 }
 
+//Simulation function
 function simulation(){
   // Display the grass
   background(garden.grassColor.r, garden.grassColor.g, garden.grassColor.b);
@@ -136,6 +139,7 @@ function simulation(){
 
 }
 
+//Flower function
 function displayFlower(){
   // Loop through all the flowers in the array and display them
   for (let i = 0; i < garden.flowers.length; i++) {
@@ -149,6 +153,7 @@ function displayFlower(){
   }
 }
 
+//Bee function
 function displayBee(){
   // Loop through all the bees in the array and display them
   for (let i = 0; i < garden.bees.length; i++) {
@@ -179,6 +184,7 @@ function displayBee(){
     }
 }
 
+//Cloud function
 function displayCloud(){
   // Loop through all the clouds in the array and display them
   for (let i = 0; i < garden.clouds.length; i++) {
@@ -191,6 +197,7 @@ function displayCloud(){
 }
 }
 
+//Trigger to ending function
 function ending(){
   for (let i = 0; i < garden.bees.length; i++){
     let bee = garden.bees[i];
@@ -205,7 +212,4 @@ function ending(){
     }
   }
 }
-
-// function secondEnding(){
-//   console.log(`second ending`);
-// }
+  
