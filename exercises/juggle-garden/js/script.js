@@ -29,6 +29,8 @@ let garden = {
   }
 };
 
+let state = `simulation`;
+
 // setup() creates the canvas and the flowers in the garden
 function setup() {
   createCanvas(600, 600);
@@ -79,10 +81,47 @@ function setup() {
 
 // draw()
 // Displays our flowers
-function draw() {
+function draw() { 
+    if (state === `simulation`) {
+        simulation();
+    }
+    else if (state === `firstEnding`) {  
+        end();
+    }
+    else if (state === `secondEnding`) {  
+        secondEnding();
+    }
+  
+
+}
+
+function end() { 
+  push();
+  //set the bg img white
+  background(255);
+
+  //text settings 
+  textSize(22); 
+  fill(0);
+  textAlign(CENTER);
+
+  //text content & placement
+  text(`The bee has polinated the garden!`, width / 2, height / 2);
+  pop();
+}
+
+function simulation(){
   // Display the grass
   background(garden.grassColor.r, garden.grassColor.g, garden.grassColor.b);
 
+  displayFlower();
+  displayBee();
+  displayCloud();
+  end();
+
+}
+
+function displayFlower(){
   // Loop through all the flowers in the array and display them
   for (let i = 0; i < garden.flowers.length; i++) {
     let flower = garden.flowers[i];
@@ -93,7 +132,9 @@ function draw() {
       flower.display();
     }
   }
+}
 
+function displayBee(){
   // Loop through all the bees in the array and display them
   for (let i = 0; i < garden.bees.length; i++) {
     let bee = garden.bees[i];
@@ -121,14 +162,30 @@ function draw() {
     userBee.y = mouseY;
     
     }
-    // Loop through all the clouds in the array and display them
-    for (let i = 0; i < garden.clouds.length; i++) {
-        let cloud = garden.clouds[i];
-        // console.log(cloud);
-        
-        // Display the clouds
-        cloud.display();
-        
-    }
-
 }
+
+function displayCloud(){
+  // Loop through all the clouds in the array and display them
+  for (let i = 0; i < garden.clouds.length; i++) {
+    let cloud = garden.clouds[i];
+    // console.log(cloud);
+    
+    // Display the clouds
+    cloud.display();
+    
+}
+}
+
+function end(){
+  for (let i = 0; i < garden.bees.length; i++){
+    let bee = garden.bees[i];
+
+    if(bee.minSize === 10){
+      state = `firstEnding`;
+    }
+  }
+}
+
+// function secondEnding(){
+//   console.log(`second ending`);
+// }
