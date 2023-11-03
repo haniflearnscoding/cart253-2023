@@ -10,7 +10,7 @@ class Bee {
     this.vy = 0;
     this.speed = 5;
     this.growRate = 0.1; // How much the bee grows if it pollinates
-    this.shrinkRate = 0.05; // How much smaller we get each frame
+    this.shrinkRate = 0.03; // How much smaller we get each frame
     this.jitteriness = 0.1; // How likely the bee is to change direction
     this.alive = true; // The Bee starts out alive!
   }

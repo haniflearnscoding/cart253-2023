@@ -89,7 +89,7 @@ function draw() {
         end();
     }
     else if (state === `secondEnding`) {  
-        secondEnding();
+        end2();
     }
   
 
@@ -106,7 +106,22 @@ function end() {
   textAlign(CENTER);
 
   //text content & placement
-  text(`The bee has polinated the garden!`, width / 2, height / 2);
+  text(`The bees have died`, width / 2, height / 2);
+  pop();
+}
+
+function end2() { 
+  push();
+  //set the bg img white
+  background(255);
+
+  //text settings 
+  textSize(22); 
+  fill(0);
+  textAlign(CENTER);
+
+  //text content & placement
+  text(`The flowers have died`, width / 2, height / 2);
   pop();
 }
 
@@ -117,7 +132,7 @@ function simulation(){
   displayFlower();
   displayBee();
   displayCloud();
-  end();
+  ending();
 
 }
 
@@ -176,12 +191,17 @@ function displayCloud(){
 }
 }
 
-function end(){
+function ending(){
   for (let i = 0; i < garden.bees.length; i++){
     let bee = garden.bees[i];
-
-    if(bee.minSize === 10){
+    if(!bee.alive){
       state = `firstEnding`;
+    }
+  }
+  for (let j = 0; j < garden.flowers.length; j++){
+    let flower = garden.flowers[j];
+    if(!flower.alive){
+      state = `secondEnding`;
     }
   }
 }
