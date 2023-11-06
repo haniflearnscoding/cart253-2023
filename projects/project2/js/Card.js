@@ -1,7 +1,9 @@
-class Deck {
-    constructor(){
+class Card {
+    constructor(x, y){
         this.x = x;
         this.y = y;
+        this.w = 50;
+        this.h = 70;
         this.suites = [`Cloud`, `Mushroom`, `Fire`, `Flower`, `Star`];
     }
 }
@@ -11,6 +13,6 @@ function display(){
     push();
     fill(255,255,255);
     noStroke();
-    rect(30, 20, 55, 55);
+    rect(this.x, this.y, this.w, this.h);
     pop();
 }
