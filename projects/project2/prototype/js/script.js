@@ -13,7 +13,7 @@ let table = {
     // An array to store the individual flowers
     cards: [],
     // How many cards are on the table
-    numCards: 3,
+    numCards: 4,
      // The color of the table (background)
      tableColor: {
         r: 53, 
