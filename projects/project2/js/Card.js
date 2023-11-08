@@ -6,13 +6,12 @@ class Card {
         this.h = 70;
         this.suites = [`Cloud`, `Mushroom`, `Fire`, `Flower`, `Star`];
     }
-}
-
-// display() draws our card onto the canvas
-function display(){
-    push();
-    fill(255,255,255);
-    noStroke();
-    rect(this.x, this.y, this.w, this.h);
-    pop();
+    // display() draws our card onto the canvas
+ display(){
+        push();
+        fill(255,255,255);
+        noStroke();
+        rect(this.x, this.y, this.w, this.h);
+        pop();
+    }
 }

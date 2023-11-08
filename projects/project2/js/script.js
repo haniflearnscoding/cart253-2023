@@ -39,7 +39,7 @@ function setup() {
         let x = random(0, width);
         let y = random(0, height);
         // Create a new card using the arguments
-        let card = new Card ()
+        let card = new Card (x, y)
         // Add the card to the array of cards
         table.cards.push(card);
     }   
@@ -96,7 +96,7 @@ function simulation(){
     displayCards();
 }
 
-//Flower function
+// Flower function
 function displayCards() {
     // Loop through all the cards in the array and display them
     for (let i = 0; i < table.cards.length; i++){
@@ -106,7 +106,7 @@ function displayCards() {
     }
 }
 
-//Mouse Click function, move from title screen to simulation
+// Mouse Click function, move from title screen to simulation
 function mouseClicked(){
     if (state ===  `title`) { 
         state = `simulation`;
