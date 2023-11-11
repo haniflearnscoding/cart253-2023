@@ -1,50 +1,33 @@
 "use strict";
 
-let barkSFX;
-// Whether to display "BARK!"
-let showBarkText = false;
-
-function preload() {
-    barkSFX = loadSound(`assets/sounds/bark.wav`);
-}
+let oscillator; // To store our oscillator
+let t = 0; // The t (time) value to use with noise()
+let tIncrease = 0.075; // How much to increase t each frame
 
 function setup() {
     createCanvas(600, 600);
     userStartAudio();
 
-    // Add cues to our sound at specific times (in seconds)
-    // which will call either showBark() or hideBark() in order
-    // to only show the text during barking sounds...
-    barkSFX.addCue(0.1, showBark);
-    barkSFX.addCue(0.3, hideBark);
-    barkSFX.addCue(0.4, showBark);
-    barkSFX.addCue(0.7, hideBark);
+    // Create a new oscillator
+    oscillator = new p5.Oscillator(0, `sine`);
+    // Set its amplitude down a bit or this could hurt
+    oscillator.amp(0.25);
 }
 
 function draw() {
     background(0);
 
-    // If showBarkText is true, we should display BARK! on the canvas
-    if (showBarkText) {
-        push();
-        fill(255);
-        textSize(64);
-        textAlign(CENTER, CENTER);
-        text(`BARK!`, width / 2, height / 2);
-        pop();
-    }
+    // Generate a Perlin noise value based on our t value
+    let perlinValue = noise(t);
+    // Map the result (between 0 and 1) to a frequency range
+    let newFreq = map(perlinValue, 0, 1, 110, 880);
+    // Set the frequency of the oscillator based on the Perlin value
+    oscillator.freq(newFreq);
+    // Increase t
+    t += tIncrease;
 }
 
-// Called when the appropriate cue is triggered!
-function showBark() {
-    showBarkText = true;
-}
-
-// Called when the appropriate cue is triggered!
-function hideBark() {
-    showBarkText = false;
-}
-
+// mousePressed() starts our siren
 function mousePressed() {
-    barkSFX.play();
+    oscillator.start();
 }
