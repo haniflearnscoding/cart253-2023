@@ -25,14 +25,19 @@ let table = {
 
 let state = `title`; // title, simulation, end
 
+// Font used for characters on card
+let cardFont;
+
 // Preload function
 function preload() {
+    cardFont = loadFont(`assets/fonts/C64_Pro_Mono-STYLE.otf`);
 
 }
 
 // Setup function
 function setup() {
     createCanvas(500, 500);
+
 
     // Create our cards by counting up to the number of the cards
     for (let i = 0; i < table.numCards; i++) {
@@ -41,8 +46,28 @@ function setup() {
         let x = random(0, width);
         let y = random(0, height);
         let suite = table.suites[i % table.suites.length];
+        // Assign a character based on your custom font mapping
+        let char;
+        switch (suite) {
+            case 'Heart':
+                char = '\u2665'; // Replace with the actual character for hearts
+                break;
+            case 'Clubs':
+                char = '\u2663'; // Replace with the actual character for clubs
+                break;
+            case 'Spades':
+                char = '\u2660'; // Replace with the actual character for clubs
+                break;
+            case 'Diamonds':
+                char = '\u2666'; // Replace with the actual character for clubs
+                break;
+
+
+            default:
+                char = ''; // Default character if not specified
+        }
         // Create a new card using the arguments
-        let card = new Card(x, y, suite)
+        let card = new Card(x, y, char)
         // Add the card to the array of cards
         table.cards.push(card);
     }
@@ -104,7 +129,6 @@ function displayCards() {
     // Loop through all the cards in the array and display them
     for (let i = 0; i < table.cards.length; i++) {
         let card = table.cards[i];
-        console.log(`test`);
         card.display();
     }
 }
