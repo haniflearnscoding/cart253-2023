@@ -22,6 +22,16 @@ let table = {
     }
 };
 
+// F-minor
+let notes = [`F3`, `G3`, `Ab4`, `Bf4`, `C4`, `Db4`, `Eb4`, `F4`];
+
+// Jazz Major Scale
+let majorScale = [`G`, `A`, `B`, `C`, `D`, `E`, `F`];
+
+// The microphone
+let mic;
+
+
 let state = `title`; // title, simulation, end
 
 // Preload function
@@ -32,6 +42,13 @@ function preload() {
 // Setup function
 function setup() {
     createCanvas(500, 500);
+    userStartAudio();
+
+    // Create our AudioIn object
+    mic = new p5.AudioIn();
+    // Try to connect to the user's microphone
+    mic.start();
+
 
     // Create our cards by counting up to the number of the flowers
     for (let i = 0; i < table.numCards; i++) {
@@ -39,7 +56,8 @@ function setup() {
         let x = random(0, width);
         let y = random(0, height);
         // Create a new card using the arguments
-        let card = new Card(x, y)
+        let note = random(notes);
+        let card = new Card(x, y, note)
         // Add the card to the array of cards
         table.cards.push(card);
     }
@@ -58,6 +76,8 @@ function draw() {
     else if (state === `end`) {
         end();
     }
+
+
 }
 
 function title() {
@@ -71,7 +91,7 @@ function title() {
     textAlign(CENTER);
 
     //text content & placement
-    text(`Placeholder`, width / 2, height / 2);
+    text(`Audio Prototyping`, width / 2, height / 2);
     pop();
 }
 
@@ -94,15 +114,52 @@ function simulation() {
     // Display the table
     background(table.tableColor.r, table.tableColor.g, table.tableColor.b);
     displayCards();
+    scaredCards();
+
 }
 
-// Flower function
+// Card function
 function displayCards() {
     // Loop through all the cards in the array and display them
     for (let i = 0; i < table.cards.length; i++) {
         let card = table.cards[i];
-        console.log(`test`);
         card.display();
+
+    }
+}
+
+function scaredCards() {
+    // Create an array to store indices of cards to be removed
+    let cardsToRemove = [];
+
+    // Loop through all the cards in the array and display them
+    for (let i = 0; i < table.cards.length; i++) {
+        let card = table.cards[i];
+        card.clap()
+        if (card.state === 'afraid') {
+            // Add the index of the scared card to the removal array
+            cardsToRemove.push(i);
+        }
+    }
+
+    // Remove the scared cards outside the loop
+    for (let i = cardsToRemove.length - 1; i >= 0; i--) {
+        table.cards.splice(cardsToRemove[i], 1);
+    }
+
+    // Generate new cards if needed
+    if (cardsToRemove.length > 0) {
+        generateNewCards();
+    }
+}
+
+function generateNewCards() {
+    for (let i = 0; i < table.numCards; i++) {
+        let x = random(0, width);
+        let y = random(0, height);
+        let note = random(notes);
+        let card = new Card(x, y, note);
+        table.cards.push(card);
     }
 }
 
