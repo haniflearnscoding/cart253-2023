@@ -31,11 +31,18 @@ let majorScale = [`G`, `A`, `B`, `C`, `D`, `E`, `F`];
 // The microphone
 let mic;
 
+// Background music
+let bgMusic
+
+// Playback Rate, set to normal
+let playbackRate = 1;
+
 
 let state = `title`; // title, simulation, end
 
 // Preload function
 function preload() {
+    bgMusic = loadSound('assets/sounds/memoryMatch.mp3');
 
 }
 
@@ -43,6 +50,7 @@ function preload() {
 function setup() {
     createCanvas(500, 500);
     userStartAudio();
+    bgMusic.loop();
 
     // Create our AudioIn object
     mic = new p5.AudioIn();
@@ -150,6 +158,8 @@ function scaredCards() {
     // Generate new cards if needed
     if (cardsToRemove.length > 0) {
         generateNewCards();
+        playbackRate += 0.05;
+        bgMusic.rate(playbackRate);
     }
 }
 

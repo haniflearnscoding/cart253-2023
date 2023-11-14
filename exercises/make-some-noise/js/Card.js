@@ -36,7 +36,7 @@ class Card {
         //     release: 0.5
         // };
 
-        this.synth.play(this.note, 0.4, 0, 0.1);
+        this.synth.play(this.note, 0.05, 0, 0.1);
     }
     clap() {
         // Get the current level of sound going into the microphone
