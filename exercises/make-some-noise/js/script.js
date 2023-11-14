@@ -99,7 +99,7 @@ function title() {
     textAlign(CENTER);
 
     //text content & placement
-    text(`Audio Prototyping`, width / 2, height / 2);
+    text(`Clap to shuffle the deck`, width / 2, height / 2);
     pop();
 }
 
