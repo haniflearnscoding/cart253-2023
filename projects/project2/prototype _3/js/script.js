@@ -13,24 +13,20 @@ let table = {
     // An array to store the individual flowers
     cards: [],
     // How many cards are on the table
-    numCards: 2,
+    numCards: 8,
     // The color of the table (background)
     tableColor: {
         r: 53,
         g: 101,
         b: 77
     },
-    suites: [`Hearts`, `Clubs`, `Spades`, `Diamonds`]
+    suites: [`Heart`, `Clubs`, `Spades`, `Diamonds`]
 };
 
 let state = `title`; // title, simulation, end
 
-
 // Font used for characters on card
 let cardFont;
-
-let rows = 3;
-let cols = 4
 
 // Preload function
 function preload() {
@@ -45,48 +41,38 @@ function setup() {
 
     // Create our cards by counting up to the number of the cards
     for (let i = 0; i < table.numCards; i++) {
-        for (let j = 0; j < table.suites.length; j++) {
-            console.log(`hello`)
-            let x = random(10)
-            let y = random(10)
 
 
-            // rect(c * this.w, r * this.h, this.w, this.h);
+        // Create variables for our arguments for clarity
+        let x;
+        let y;
+        let rows;
+        let cols;
 
-            let suite = table.suites[j];
-            // Assign a character based on your custom font mapping
-            let char;
-            switch (suite) {
-                case 'Hearts':
-                    char = '\u2665'; // Replace with the actual character for hearts
-                    break;
-                case 'Clubs':
-                    char = '\u2663'; // Replace with the actual character for clubs
-                    break;
-                case 'Spades':
-                    char = '\u2660'; // Replace with the actual character for clubs
-                    break;
-                case 'Diamonds':
-                    char = '\u2666'; // Replace with the actual character for clubs
-                    break;
-                default:
-                    char = ''; // Default character if not specified
-            }
-            // Create a new card using the arguments
-            let card = new Card(x, y, char)
-            // let card2 = new Card(x2, y2, char)
-            // Add the card to the array of cards
-            table.cards.push(card);
-
-
-
-            // Create variables for our arguments for clarity
-            // let x = random(0, width);
-            // let y = random(0, height);
-            // let x2 = random(0, width);
-            // let y2 = random(0, height);
-
+        let suite = table.suites[i];
+        // Assign a character based on your custom font mapping
+        let char;
+        switch (suite) {
+            case 'Heart':
+                char = '\u2665'; // Replace with the actual character for hearts
+                break;
+            case 'Clubs':
+                char = '\u2663'; // Replace with the actual character for clubs
+                break;
+            case 'Spades':
+                char = '\u2660'; // Replace with the actual character for clubs
+                break;
+            case 'Diamonds':
+                char = '\u2666'; // Replace with the actual character for clubs
+                break;
+            default:
+                char = ''; // Default character if not specified
         }
+        // Create a new card using the arguments
+        let card = new Card(x, y, rows, cols, char)
+        // Add the card to the array of cards
+        table.cards.push(card);
+
 
     }
 
@@ -144,17 +130,10 @@ function simulation() {
 
 // Flower function
 function displayCards() {
-
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-            // Loop through all the cards in the array and display them
-            for (let i = 0; i < table.cards.length; i++) {
-                let card = table.cards[i];
-                card.x = (c * card.w) * 1.25;
-                card.y = (r * card.h) * 1.25;
-                card.display();
-            }
-        }
+    // Loop through all the cards in the array and display them
+    for (let i = 0; i < table.cards.length; i++) {
+        let card = table.cards[i];
+        card.display();
     }
 }
 

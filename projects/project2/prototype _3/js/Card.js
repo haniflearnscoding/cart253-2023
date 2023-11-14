@@ -8,17 +8,21 @@ class Card {
         this.cols = 3;
         this.suite = suite; // Store the suite of the card
         this.char = char; // Store the character associated with the suite
-        this.flipped = false;
+        this.flipped = true;
     }
     // display() draws our card onto the canvas
     display() {
+
+        // for (let r = 0; r < this.rows; r++) {
+        // for (let c = 0; c < this.cols; c++) {
         push();
         if (this.flipped) {
-            fill(255); // Black if flipped
+            fill(255);
         } else {
-            fill(0); // White if not flipped
+            fill(0);
         } noStroke();
-        rect(this.x, this.y, this.w, this.h);
+
+        rect((c * this.w) * 1.25, (r * this.h) * 1.25, this.w, this.h);
 
         // Display the suite text in the center of the card
         textFont(cardFont);
@@ -28,6 +32,10 @@ class Card {
         textAlign(CENTER, CENTER);
         text(this.suite, this.x + this.w / 2, this.y + this.h / 2);
         pop();
+        // }
+        // }
+
+
 
     }
 
