@@ -83,19 +83,23 @@ function setup() {
 
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
+            // Calculate the center of the canvas
+            let centerX = width / 2;
+            let centerY = height / 2;
+
+            // Calculate the starting position for the cards
+            let startX = centerX - (cols / 2) * w * 1.25;
+            let startY = centerY - (rows / 2) * h * 1.25;
 
             // Create our cards by counting up to the number of the cards
-            let x = (c * w) * 1.25;
-            let y = (r * h) * 1.25;
+            let x = startX + (c * w) * 1.25;
+            let y = startY + (r * h) * 1.25;
 
             let cardIndex = c + r * cols;
             table.cards[cardIndex].x = x;
             table.cards[cardIndex].y = y;
-
         }
     }
-
-
 }
 
 
@@ -146,6 +150,7 @@ function simulation() {
     // Display the table
     background(table.tableColor.r, table.tableColor.g, table.tableColor.b);
     displayCards();
+    matchCard();
 }
 
 // Flower function
@@ -175,12 +180,43 @@ function mousePressed() {
             mouseY > card.y &&
             mouseY < card.y + card.h
         ) {
-            console.log("Mouse pressed on card:", card);
+            // console.log("Mouse pressed on card:", card);
 
             // Toggle the pressed state of the card
             if (!card.flipped) {
                 card.cardFlip();
             }
         }
+    }
+}
+
+function matchCard() {
+    let flippedCards = [];
+    // Array to store flipped cards
+
+    // Loop through all the cards to find flipped ones
+    for (let i = 0; i < table.cards.length; i++) {
+        let card = table.cards[i];
+
+        // Check if the card is flipped
+        if (card.flipped) {
+            // Add the flipped card to the array
+            flippedCards.push(card);
+        }
+    }
+
+    // Check if there are exactly two flipped cards
+    if (flippedCards.length === 2) {
+        // Check if the suites of the two flipped cards are the same
+        if (flippedCards[0].suite === flippedCards[1].suite) {
+            // Cards have the same suite, do something (e.g., remove the matched cards)
+            console.log("Matched!");
+        } else {
+            // Cards have different suites, flip them back or take other actions
+            console.log("Not matched!");
+        }
+
+        // Reset the array of flipped cards for the next turn
+        flippedCards = [];
     }
 }

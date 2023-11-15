@@ -18,6 +18,7 @@ class Card {
         } else {
             fill(0); // White if not flipped
         } noStroke();
+        // rectMode(CENTER);
         rect(this.x, this.y, this.w, this.h);
 
         // Display the suite text in the center of the card
@@ -33,6 +34,6 @@ class Card {
 
     cardFlip() {
         this.flipped = !this.flipped;
-        console.log("Card flipped:", this.flipped);
+        // console.log("Card flipped:", this.flipped);
     }
 }

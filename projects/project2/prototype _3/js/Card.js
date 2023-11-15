@@ -14,25 +14,25 @@ class Card {
     display() {
 
         // for (let r = 0; r < this.rows; r++) {
-        // for (let c = 0; c < this.cols; c++) {
-        push();
-        if (this.flipped) {
-            fill(255);
-        } else {
-            fill(0);
-        } noStroke();
+            // for (let c = 0; c < this.cols; c++) {
+                push();
+                if (this.flipped) {
+                    fill(255);
+                } else {
+                    fill(0);
+                } noStroke();
 
-        rect((c * this.w) * 1.25, (r * this.h) * 1.25, this.w, this.h);
+                rect((c * this.w) * 1.25, (r * this.h) * 1.25, this.w, this.h);
 
-        // Display the suite text in the center of the card
-        textFont(cardFont);
-        textSize(20);
-        textStyle(NORMAL);
-        fill(0);
-        textAlign(CENTER, CENTER);
-        text(this.suite, this.x + this.w / 2, this.y + this.h / 2);
-        pop();
-        // }
+                // Display the suite text in the center of the card
+                textFont(cardFont);
+                textSize(20);
+                textStyle(NORMAL);
+                fill(0);
+                textAlign(CENTER, CENTER);
+                text(this.suite, this.x + this.w / 2, this.y + this.h / 2);
+                pop();
+            // }
         // }
 
 
