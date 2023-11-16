@@ -35,6 +35,10 @@ let cols = 4
 let w = 50;
 let h = 70;
 
+// Define a flag to indicate whether to check for matches
+let shouldCheckForMatches = false;
+
+
 // Preload function
 function preload() {
     cardFont = loadFont(`assets/fonts/C64_Pro_Mono-STYLE.otf`);
@@ -150,7 +154,14 @@ function simulation() {
     // Display the table
     background(table.tableColor.r, table.tableColor.g, table.tableColor.b);
     displayCards();
-    matchCard();
+
+    // Check for matches only if the flag is set
+    if (shouldCheckForMatches) {
+        matchCard();
+        resetFlip();
+        shouldCheckForMatches = false; // Reset the flag
+    }
+
 }
 
 // Flower function
@@ -171,9 +182,16 @@ function mouseClicked() {
 }
 
 function mousePressed() {
+    // Count the number of flipped cards
+    let flippedCount = 0;
     // Loop through all the cards and check if the mouse is over each card
     for (let i = 0; i < table.cards.length; i++) {
         let card = table.cards[i];
+
+        // Count the number of flipped cards
+        if (card.flipped) {
+            flippedCount++;
+        }
         if (
             mouseX > card.x &&
             mouseX < card.x + card.w &&
@@ -183,8 +201,9 @@ function mousePressed() {
             // console.log("Mouse pressed on card:", card);
 
             // Toggle the pressed state of the card
-            if (!card.flipped) {
+            if (!card.flipped && flippedCount < 2) {
                 card.cardFlip();
+                shouldCheckForMatches = true; // Set the flag to check for matches in the next frame
             }
         }
     }
@@ -199,12 +218,17 @@ function matchCard() {
         let card = table.cards[i];
 
         // Check if the card is flipped
-        if (card.flipped) {
+        if (card.flipped && flippedCards.length < 2 && !flippedCards.includes(card)) {
             // Add the flipped card to the array
             flippedCards.push(card);
+            console.log("Flipped card:", card);
         }
     }
 
+}
+
+function resetFlip() {
+    // console.log(`test`);
     // Check if there are exactly two flipped cards
     if (flippedCards.length === 2) {
         // Check if the suites of the two flipped cards are the same
@@ -214,9 +238,9 @@ function matchCard() {
         } else {
             // Cards have different suites, flip them back or take other actions
             console.log("Not matched!");
+            // Reset the array of flipped cards for the next turn
         }
 
-        // Reset the array of flipped cards for the next turn
-        flippedCards = [];
     }
+    flippedCards = [];
 }
