@@ -154,8 +154,8 @@ function simulation() {
     displayCards();
 
 
-    resetFlip();
     matchCard();
+    resetFlip();
 
 
 }
@@ -207,9 +207,10 @@ function matchCard() {
         let card = table.cards[i];
 
         // Check if the card is flipped
-        if (card.flipped && flippedCards.length < 2 && !flippedCards.includes(card)) {
+        if (card.flipped && flippedCards.length < 2 && !flippedCards.includes(card) && card.checked === false) {
             // Add the flipped card to the array
             flippedCards.push(card);
+            card.checked = true;
             // console.log("Flipped card:", card);
         }
     }
@@ -217,7 +218,7 @@ function matchCard() {
 }
 
 function resetFlip() {
-    // console.log(`test`);
+
     // Check if there are exactly two flipped cards
     if (flippedCards.length === 2) {
         // Check if the suites of the two flipped cards are the same
@@ -231,5 +232,6 @@ function resetFlip() {
         }
 
         flippedCards = [];
+        console.log(flippedCards.length);
     }
 }
