@@ -35,8 +35,6 @@ let cols = 4
 let w = 50;
 let h = 70;
 
-// Define a flag to indicate whether to check for matches
-let shouldCheckForMatches = false;
 
 
 // Preload function
@@ -155,12 +153,10 @@ function simulation() {
     background(table.tableColor.r, table.tableColor.g, table.tableColor.b);
     displayCards();
 
-    // Check for matches only if the flag is set
-    if (shouldCheckForMatches) {
-        matchCard();
-        resetFlip();
-        shouldCheckForMatches = false; // Reset the flag
-    }
+
+    resetFlip();
+    matchCard();
+
 
 }
 
@@ -182,16 +178,10 @@ function mouseClicked() {
 }
 
 function mousePressed() {
-    // Count the number of flipped cards
-    let flippedCount = 0;
+
     // Loop through all the cards and check if the mouse is over each card
     for (let i = 0; i < table.cards.length; i++) {
         let card = table.cards[i];
-
-        // Count the number of flipped cards
-        if (card.flipped) {
-            flippedCount++;
-        }
         if (
             mouseX > card.x &&
             mouseX < card.x + card.w &&
@@ -201,16 +191,15 @@ function mousePressed() {
             // console.log("Mouse pressed on card:", card);
 
             // Toggle the pressed state of the card
-            if (!card.flipped && flippedCount < 2) {
+            if (!card.flipped) {
                 card.cardFlip();
-                shouldCheckForMatches = true; // Set the flag to check for matches in the next frame
             }
         }
     }
 }
 
+let flippedCards = [];
 function matchCard() {
-    let flippedCards = [];
     // Array to store flipped cards
 
     // Loop through all the cards to find flipped ones
@@ -221,7 +210,7 @@ function matchCard() {
         if (card.flipped && flippedCards.length < 2 && !flippedCards.includes(card)) {
             // Add the flipped card to the array
             flippedCards.push(card);
-            console.log("Flipped card:", card);
+            // console.log("Flipped card:", card);
         }
     }
 
@@ -241,6 +230,6 @@ function resetFlip() {
             // Reset the array of flipped cards for the next turn
         }
 
+        flippedCards = [];
     }
-    flippedCards = [];
 }

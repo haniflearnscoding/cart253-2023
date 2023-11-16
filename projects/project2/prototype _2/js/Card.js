@@ -7,7 +7,7 @@ class Card {
         this.rows = 4;
         this.cols = 3;
         this.suite = suite; // Store the suite of the card
-        this.char = char; // Store the character associated with the suite
+        // this.char = char; // Store the character associated with the suite
         this.flipped = false;
     }
     // display() draws our card onto the canvas
