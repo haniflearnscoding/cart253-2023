@@ -45,7 +45,7 @@ function preload() {
 
 // Setup function
 function setup() {
-    createCanvas(500, 500);
+    createCanvas(700, 400);
     // rect(c * this.w, r * this.h, this.w, this.h);
 
     // Create Deck
@@ -218,9 +218,14 @@ function matchCard() {
 }
 
 function resetFlip() {
+    console.log("resetFlip function called"); // Add this line
 
     // Check if there are exactly two flipped cards
     if (flippedCards.length === 2) {
+        console.log(flippedCards.length);
+
+        let shouldFlipBack = true; // Flag to determine whether any card should be flipped back
+
         // Check if the suites of the two flipped cards are the same
         if (flippedCards[0].suite === flippedCards[1].suite) {
             // Cards have the same suite, do something (e.g., remove the matched cards)
@@ -228,10 +233,23 @@ function resetFlip() {
         } else {
             // Cards have different suites, flip them back or take other actions
             console.log("Not matched!");
-            // Reset the array of flipped cards for the next turn
+
+            if (shouldFlipBack) {
+
+                for (let i = 0; i < table.cards.length; i++) {
+                    let card = table.cards[i];
+                    console.log(`test`);
+                    if (flippedCards.includes(card)) {
+                        setTimeout(() => {
+                            card.cardFlip(); // Flip back only the cards in flippedCards array
+                        }, 500);
+                    }
+                }
+            }
         }
 
+        // Reset the array of flipped cards for the next turn
         flippedCards = [];
-        console.log(flippedCards.length);
     }
+
 }
