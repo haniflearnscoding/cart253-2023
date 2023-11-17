@@ -23,6 +23,8 @@ let table = {
     suites: [`Hearts`, `Clubs`, `Spades`, `Diamonds`]
 };
 
+let flippedCards = [];
+
 let state = `title`; // title, simulation, end
 
 
@@ -152,12 +154,6 @@ function simulation() {
     // Display the table
     background(table.tableColor.r, table.tableColor.g, table.tableColor.b);
     displayCards();
-
-
-    matchCard();
-    resetFlip();
-
-
 }
 
 // Flower function
@@ -178,27 +174,18 @@ function mouseClicked() {
 }
 
 function mousePressed() {
-
     // Loop through all the cards and check if the mouse is over each card
     for (let i = 0; i < table.cards.length; i++) {
         let card = table.cards[i];
-        if (
-            mouseX > card.x &&
-            mouseX < card.x + card.w &&
-            mouseY > card.y &&
-            mouseY < card.y + card.h
-        ) {
-            // console.log("Mouse pressed on card:", card);
-
-            // Toggle the pressed state of the card
-            if (!card.flipped) {
-                card.cardFlip();
-            }
-        }
+        card.mousePressed();
     }
+
+    matchCard();
+
+    resetFlip();
 }
 
-let flippedCards = [];
+
 function matchCard() {
     // Array to store flipped cards
 
@@ -210,7 +197,7 @@ function matchCard() {
         if (card.flipped && flippedCards.length < 2 && !flippedCards.includes(card) && card.checked === false) {
             // Add the flipped card to the array
             flippedCards.push(card);
-            card.checked = true;
+
             // console.log("Flipped card:", card);
         }
     }
@@ -222,30 +209,32 @@ function resetFlip() {
 
     // Check if there are exactly two flipped cards
     if (flippedCards.length === 2) {
-        console.log(flippedCards.length);
+        // console.log(flippedCards.length);
 
-        let shouldFlipBack = true; // Flag to determine whether any card should be flipped back
+        // let shouldFlipBack = true; // Flag to determine whether any card should be flipped back
 
         // Check if the suites of the two flipped cards are the same
         if (flippedCards[0].suite === flippedCards[1].suite) {
+            flippedCards[0].checked = true;
+            flippedCards[1].checked = true;
             // Cards have the same suite, do something (e.g., remove the matched cards)
             console.log("Matched!");
         } else {
             // Cards have different suites, flip them back or take other actions
             console.log("Not matched!");
 
-            if (shouldFlipBack) {
+            // if (shouldFlipBack) {
 
-                for (let i = 0; i < table.cards.length; i++) {
-                    let card = table.cards[i];
-                    console.log(`test`);
-                    if (flippedCards.includes(card)) {
-                        setTimeout(() => {
-                            card.cardFlip(); // Flip back only the cards in flippedCards array
-                        }, 500);
-                    }
+            for (let i = 0; i < table.cards.length; i++) {
+                let card = table.cards[i];
+                console.log(`test`);
+                if (flippedCards.includes(card)) {
+                    setTimeout(() => {
+                        card.cardFlip(); // Flip back only the cards in flippedCards array
+                    }, 500);
                 }
             }
+            // }
         }
 
         // Reset the array of flipped cards for the next turn
