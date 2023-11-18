@@ -31,6 +31,15 @@ let state = `title`; // title, simulation, end
 // Font used for characters on card
 let cardFont;
 
+//Bg sound used for game
+let bgSound;
+
+//SFX played when two pairs are flipped
+let flipSound
+
+//SFX played when deck is placed
+let deckSound
+
 let rows = 3;
 let cols = 4
 
@@ -43,10 +52,17 @@ let h = 70;
 function preload() {
     cardFont = loadFont(`assets/fonts/C64_Pro_Mono-STYLE.otf`);
 
+    bgSound = loadSound(`assets/sounds/casino_constant.wav`);
+
+    flipSound = loadSound(`assets/sounds/mixkit-retro-arcade-casino-notification-211.wav`);
+
+    deckSound = loadSound(`assets/sounds/mixkit-cards-deck-hits-1994.wav`);
+
 }
 
 // Setup function
 function setup() {
+    bgSound.loop();
     createCanvas(700, 400);
     // rect(c * this.w, r * this.h, this.w, this.h);
 
@@ -114,6 +130,7 @@ function draw() {
     }
     else if (state === `simulation`) {
         simulation();
+
     }
     else if (state === `end`) {
         end();
@@ -122,6 +139,7 @@ function draw() {
 
 function title() {
     push();
+
     //set the bg img white
     background(255);
 
@@ -154,8 +172,10 @@ function simulation() {
     // Display the table
     background(table.tableColor.r, table.tableColor.g, table.tableColor.b);
     displayCards();
+
 }
 
+// let cardDisplayed = false;
 // Flower function
 function displayCards() {
     // Loop through all the cards in the array and display them
@@ -163,8 +183,14 @@ function displayCards() {
         let card = table.cards[i];
 
         card.display();
+        // cardDisplayed = true;
     }
+    // if (cardDisplayed) {
+    //     deckSound.play();
+    // }
+
 }
+
 
 // Mouse Click function, move from title screen to simulation
 function mouseClicked() {
@@ -198,6 +224,7 @@ function matchCard() {
             // Add the flipped card to the array
             flippedCards.push(card);
 
+
             // console.log("Flipped card:", card);
         }
     }
@@ -217,6 +244,10 @@ function resetFlip() {
         if (flippedCards[0].suite === flippedCards[1].suite) {
             flippedCards[0].checked = true;
             flippedCards[1].checked = true;
+
+            // Play sound when two matches
+            flipSound.play();
+
             // Cards have the same suite, do something (e.g., remove the matched cards)
             console.log("Matched!");
         } else {
