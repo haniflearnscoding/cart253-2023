@@ -46,6 +46,9 @@ let cols = 4
 let w = 50;
 let h = 70;
 
+//Typewriter narating the story of the game
+let typewriter;
+
 
 
 // Preload function
@@ -62,10 +65,18 @@ function preload() {
 
 // Setup function
 function setup() {
-    userStartAudio();
-    bgSound.loop();
     createCanvas(700, 400);
-    // rect(c * this.w, r * this.h, this.w, this.h);
+
+    userStartAudio();
+
+    // Loop bg sound for the whole game
+    bgSound.loop();
+
+    // Create a typewriter object for display text is typewriter style
+    typewriter = new Typewriter();
+
+    typewriter.typewrite(`Friends, Romans, Countryfolk...`, 100, 100);
+
 
     // Create Deck
     for (let i = 0; i < rows * cols; i += 2) {
@@ -126,6 +137,8 @@ function setup() {
 
 // Draw function, different states of the game
 function draw() {
+
+
     if (state === `title`) {
         title();
     }
@@ -139,19 +152,25 @@ function draw() {
 }
 
 function title() {
-    push();
+    // push();
 
-    //set the bg img white
-    background(255);
+    // //set the bg img white
+    background(0);
 
-    //text settings 
-    textSize(22);
-    fill(0);
-    textAlign(CENTER);
 
-    //text content & placement
-    text(`Placeholder`, width / 2, height / 2);
-    pop();
+
+
+    // //text settings
+    // textSize(22);
+    // fill(0);
+    // textAlign(CENTER);
+
+    // //text content & placement
+    // text(`Placeholder`, width / 2, height / 2);
+    // pop();
+
+    // Create a typewriter object for display text is typewriter style
+    typewriter.display();
 }
 
 function end() {
