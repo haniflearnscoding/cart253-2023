@@ -62,6 +62,7 @@ function preload() {
 
 // Setup function
 function setup() {
+    userStartAudio();
     bgSound.loop();
     createCanvas(700, 400);
     // rect(c * this.w, r * this.h, this.w, this.h);

@@ -132,7 +132,7 @@ function title() {
 
     //text content & placement
     fill(255);
-    text(`ACCOPIA vincente`, width / 2, height / 2);
+    text(`M.M. Casino`, width / 2, height / 2);
     pop();
 }
 
