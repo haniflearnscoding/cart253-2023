@@ -41,20 +41,18 @@ class Card {
     mousePressed() {
 
         // Loop through all the cards and check if the mouse is over each card
-        for (let i = 0; i < table.cards.length; i++) {
-            let card = table.cards[i];
-            if (
-                mouseX > card.x &&
-                mouseX < card.x + card.w &&
-                mouseY > card.y &&
-                mouseY < card.y + card.h
-            ) {
-                // console.log("Mouse pressed on card:", card);
+        let card = this;
+        if (
+            mouseX > card.x &&
+            mouseX < card.x + card.w &&
+            mouseY > card.y &&
+            mouseY < card.y + card.h
+        ) {
+            // console.log("Mouse pressed on card:", card);
 
-                // Toggle the pressed state of the card
-                if (!card.flipped) {
-                    card.cardFlip();
-                }
+            // Toggle the pressed state of the card
+            if (!card.flipped) {
+                card.cardFlip();
             }
         }
     }

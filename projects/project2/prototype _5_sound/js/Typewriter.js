@@ -60,8 +60,8 @@ class Typewriter {
         push();
         fill(255);
         textFont(`Courier`);
-        textSize(18);
-        textAlign(LEFT, TOP);
+        textSize(30);
+        textAlign(CENTER, BOTTOM);
         text(this.displayText, this.x, this.y);
         pop();
     }
