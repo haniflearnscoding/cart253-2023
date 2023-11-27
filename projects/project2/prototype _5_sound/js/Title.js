@@ -24,8 +24,11 @@ class Title {
         // Set the background.
         background(0);
         this.typewriter.display();
+    }
 
 
+    updateTitleText(newText) {
+        this.typewriter = newText;
     }
 
     text() {

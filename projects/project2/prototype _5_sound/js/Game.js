@@ -15,6 +15,9 @@ class Game {
 
         this.flippedCards = [];
 
+        //check for all cards flipped on table for ending state
+        this.allCardsFlipped = [];
+
         this.state = `title`; // title, simulation, end
 
 
@@ -46,6 +49,8 @@ class Game {
         this.createDeck();
         this.placeDeck(width, height);
         console.log(this.table);
+        // console.log(this.flippedCards);
+        // console.log(this.allCardsFlipped);
     }
 
     createDeck() {
@@ -75,6 +80,8 @@ class Game {
             this.table.cards.push(card);
             let card2 = new Card(0, 0, char)
             this.table.cards.push(card2);
+
+
         }
     }
 
@@ -95,13 +102,13 @@ class Game {
 
                 // Create our cards by counting up to the number of the cards
                 let x = startX + (c * this.w) * 1.25;
-                console.log(centerX, this.cols, this.w);
-                // console.log(c);
+                // console.log(centerX, this.cols, this.w);
+
                 let y = startY + (r * this.h) * 1.25;
 
                 let cardIndex = c + r * this.cols;
                 this.table.cards[cardIndex].x = x;
-                console.log(c, r, this.rows, this.cols, cardIndex);
+                // console.log(c, r, this.rows, this.cols, cardIndex);
                 this.table.cards[cardIndex].y = y;
             }
         }
@@ -137,8 +144,9 @@ class Game {
         }
 
         this.matchCard();
-
+        this.triggerEnd();
         this.resetFlip();
+        this.checkEnding()
     }
 
     matchCard() {
@@ -146,19 +154,41 @@ class Game {
 
         // Loop through all the cards to find flipped ones
         for (let i = 0; i < this.table.cards.length; i++) {
+            // for (let j = 0; j < this.table.cards.length; j++) {
             let card = this.table.cards[i];
+            // let card2 = this.table.cards[j];
 
             // Check if the card is flipped
             if (card.flipped && this.flippedCards.length < 2 && !this.flippedCards.includes(card) && card.checked === false) {
                 // Add the flipped card to the array
                 this.flippedCards.push(card);
+                console.log(this.flippedCards.length);
             }
+
+            // if (card2.flipped && this.flippedCards.length < 2 && !this.flippedCards.includes(card2) && card2.checked === false) {
+            //     //When two matching cards are flipped, push the card into allFlippedCards
+            //     this.allCardsFlipped.push(card2);
+            //     console.log(this.allCardsFlipped.length);
+            // }
+
+            // }
+
+
         }
 
     }
 
+    triggerEnd() {
+        // Check the number of flipped cards
+        if (this.flippedCards.length === 2 && this.flippedCards[0].suite === this.flippedCards[1].suite) {
+            // Two matching cards are flipped, push them into allCardsFlipped
+            this.allCardsFlipped.push(this.flippedCards[0], this.flippedCards[1]);
+            console.log(this.allCardsFlipped.length);
+        }
+    }
+
     resetFlip() {
-        console.log("resetFlip function called"); // Add this line
+        // console.log("resetFlip function called"); // Add this line
 
         // Check if there are exactly two flipped cards
         if (this.flippedCards.length === 2) {
@@ -184,7 +214,6 @@ class Game {
 
                 for (let i = 0; i < this.table.cards.length; i++) {
                     let card = this.table.cards[i];
-                    console.log(`test`);
                     if (this.flippedCards.includes(card)) {
                         setTimeout(() => {
                             card.cardFlip(); // Flip back only the cards in flippedCards array
@@ -194,10 +223,20 @@ class Game {
                 // }
             }
 
+
             // Reset the array of flipped cards for the next turn
             this.flippedCards = [];
         }
 
+    }
+
+    checkEnding() {
+        if (this.allCardsFlipped.length === this.table.cards.length) {
+            setTimeout(() => {
+                currentState = new Title();
+                currentState.updateTitleText("New Title Text");
+            }, 500);
+        }
     }
 
 
