@@ -7,11 +7,12 @@ class Title {
     // constructor()
     // Acts as the setup() of the state, called when the
     // state is created. Sets the title of the program.
-    constructor() {
+    constructor(title) {
         // Set our property determining the title of the simulation
         // this.titleString = "Life: A Metaphor";
         // Create a typewriter object for display text is typewriter style
         this.typewriter = new Typewriter();
+        this.newText = title;
         this.text();
 
 
@@ -22,21 +23,29 @@ class Title {
     // state needs to do each frame, which is display the title.
     draw() {
         // Set the background.
+        console.log("Drawing title...");
         background(0);
         this.typewriter.display();
+
     }
 
 
-    updateTitleText(newText) {
-        this.typewriter = newText;
-    }
+    // updateTitleText(newTitle) {
+    //     this.newText = newTitle
+    //     console.log("Updating title text...");
+    //     this.typewriter = this.newText;
+    //     this.typewriter = new Typewriter();
+    //     // this.draw();
+    //     console.log(this.newText);
+    //     this.text();
+    // }
 
     text() {
 
         push();
         fill(255);
         // this.titleString.typewrite(`Friends, Romans, Countryfolk...`, 100, 100);
-        text(this.typewriter.typewrite(`M.M Casino`, width / 2, height / 2));
+        text(this.typewriter.typewrite(this.newText, width / 2, height / 2));
 
         pop();
     }

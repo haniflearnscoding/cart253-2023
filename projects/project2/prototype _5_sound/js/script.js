@@ -21,8 +21,16 @@ let flipSound
 let deckSound
 
 
-// let game;
+//
 let currentState;
+
+//
+let currentGame = -1;
+let gameDialogue = [`First`, `Second`, `Third`];
+
+//
+let rows = 1;
+let cols = 2;
 
 
 
@@ -41,7 +49,7 @@ function setup() {
     createCanvas(700, 400);
 
     userStartAudio();
-    currentState = new Title();
+    currentState = new Title(`M.M Casino`);
 
 }
 

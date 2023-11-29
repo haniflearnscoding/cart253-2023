@@ -42,6 +42,7 @@ class Typewriter {
     // Adds the next character to our display text if possible
     addNextCharacter() {
         // First check if we've reached the end of the full text
+        console.log(this.fullText);
         if (this.nextChar >= this.fullText.length) {
             // If so, just return and don't do anything because we're finished
             return;
@@ -54,6 +55,8 @@ class Typewriter {
         this.nextChar = this.nextChar + 1;
     }
 
+
+
     // display()
     // Display the current display text at the correct location
     display() {
@@ -64,6 +67,14 @@ class Typewriter {
         textAlign(CENTER, BOTTOM);
         text(this.displayText, this.x, this.y);
         pop();
+    }
+
+    draw() {
+        // Set the background.
+        background(0);
+
+        // Display using the typewriter
+        this.typewriter.display();
     }
 
     // reset()

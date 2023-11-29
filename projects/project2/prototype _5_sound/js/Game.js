@@ -1,5 +1,5 @@
 class Game {
-    constructor(cardFont, bgSound, flipSound, deckSound) {
+    constructor(cardFont, bgSound, flipSound, deckSound, rows, cols) {
         this.table = {
             // An array to store the individual flowers
             cards: [],
@@ -18,7 +18,7 @@ class Game {
         //check for all cards flipped on table for ending state
         this.allCardsFlipped = [];
 
-        this.state = `title`; // title, simulation, end
+        // this.state = `title`; // title, simulation, end
 
 
         // Font used for characters on card
@@ -33,17 +33,19 @@ class Game {
         //SFX played when deck is placed
         this.deckSound = deckSound;
 
-        this.rows = 3;
-        this.cols = 4
+        // this.rows = 1;
+        // this.cols = 2;
+        this.rows = rows;
+        this.cols = cols;
 
         this.w = 50;
         this.h = 70;
 
         //Typewriter narating the story of the game
-        this.typewriter;
+        // this.typewriter;
 
         // A variable to store the currently active state object (starts empty)
-        this.currentState = new Title();
+        // this.currentState = new Title();
 
         // Create a new card using the arguments
         this.createDeck();
@@ -55,7 +57,7 @@ class Game {
 
     createDeck() {
         // Create Deck
-        for (let i = 0; i < this.rows * this.cols; i += 2) {
+        for (let i = 0; i < rows * cols; i += 2) {
             let suite = random(this.table.suites);
             // Assign a character based on your custom font mapping
             let char;
@@ -90,15 +92,15 @@ class Game {
             return 0.5 - Math.random();
         });
 
-        for (let r = 0; r < this.rows; r++) {
-            for (let c = 0; c < this.cols; c++) {
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
                 // Calculate the center of the canvas
                 let centerX = width / 2;
                 let centerY = height / 2;
 
                 // Calculate the starting position for the cards
-                let startX = centerX - (this.cols / 2) * this.w * 1.25;
-                let startY = centerY - (this.rows / 2) * this.h * 1.25;
+                let startX = centerX - (cols / 2) * this.w * 1.25;
+                let startY = centerY - (rows / 2) * this.h * 1.25;
 
                 // Create our cards by counting up to the number of the cards
                 let x = startX + (c * this.w) * 1.25;
@@ -106,7 +108,7 @@ class Game {
 
                 let y = startY + (r * this.h) * 1.25;
 
-                let cardIndex = c + r * this.cols;
+                let cardIndex = c + r * cols;
                 this.table.cards[cardIndex].x = x;
                 // console.log(c, r, this.rows, this.cols, cardIndex);
                 this.table.cards[cardIndex].y = y;
@@ -232,9 +234,17 @@ class Game {
 
     checkEnding() {
         if (this.allCardsFlipped.length === this.table.cards.length) {
+            currentGame += 1;
             setTimeout(() => {
-                currentState = new Title();
-                currentState.updateTitleText("New Title Text");
+                console.log("Checking ending...");
+                currentState = new Title(gameDialogue[currentGame]);
+                rows += 1;
+                cols += 1;
+                // for (let i = 0; i < currentGame; i++) {
+                // console.log("Checking dialogue...");
+                // currentState.updateTitleText(gameDialogue[0]);
+                // currentGame += 1
+                // }
             }, 500);
         }
     }
