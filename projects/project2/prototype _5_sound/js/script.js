@@ -26,12 +26,15 @@ let currentState;
 
 //
 let currentGame = -1;
-let gameDialogue = [`First`, `Second`, `Third`];
+let gameDialogue = [`Memory used to be described as an analogy for a library `, `scientists have proven the analogy to be false`, `metaphors are the only way of truly defining them`, `like lines in a leaf`, `like a match connecting fire to fire`, `like writing in the sand`, `like file cabinets`, `like a fog lifting`, `like a crumpled piece of paper slowly unfolding`, `like a phoenix rising from the ash`, `like knots in a string of beads`];
 
 //
 let rows = 1;
 let cols = 2;
 
+//
+let w = 50;
+let h = 70;
 
 
 // Preload function
@@ -47,9 +50,11 @@ function preload() {
 // Setup function
 function setup() {
     createCanvas(700, 400);
+    bgSound.loop();
 
     userStartAudio();
-    currentState = new Title(`M.M Casino`);
+    currentState = new Title(`Memory`);
+
 
 }
 

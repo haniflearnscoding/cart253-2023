@@ -1,5 +1,5 @@
 class Game {
-    constructor(cardFont, bgSound, flipSound, deckSound, rows, cols) {
+    constructor(cardFont, flipSound, deckSound, rows, cols, w, h) {
         this.table = {
             // An array to store the individual flowers
             cards: [],
@@ -25,7 +25,7 @@ class Game {
         this.cardFont = cardFont;
 
         //Bg sound used for game
-        this.bgSound = bgSound;
+        // this.bgSound = bgSound;
 
         //SFX played when two pairs are flipped
         this.flipSound = flipSound;
@@ -38,8 +38,11 @@ class Game {
         this.rows = rows;
         this.cols = cols;
 
-        this.w = 50;
-        this.h = 70;
+        // this.w = 50;
+        // this.h = 70;
+
+        this.w = w;
+        this.h = h;
 
         //Typewriter narating the story of the game
         // this.typewriter;
@@ -53,6 +56,8 @@ class Game {
         console.log(this.table);
         // console.log(this.flippedCards);
         // console.log(this.allCardsFlipped);
+
+        // this.music();
     }
 
     createDeck() {
@@ -85,6 +90,7 @@ class Game {
 
 
         }
+
     }
 
     placeDeck(width, height) {
@@ -99,19 +105,21 @@ class Game {
                 let centerY = height / 2;
 
                 // Calculate the starting position for the cards
-                let startX = centerX - (cols / 2) * this.w * 1.25;
-                let startY = centerY - (rows / 2) * this.h * 1.25;
+                let startX = centerX - (cols / 2) * w * 1.25;
+                let startY = centerY - (rows / 2) * h * 1.25;
 
                 // Create our cards by counting up to the number of the cards
-                let x = startX + (c * this.w) * 1.25;
+                let x = startX + (c * w) * 1.25;
                 // console.log(centerX, this.cols, this.w);
 
-                let y = startY + (r * this.h) * 1.25;
+                let y = startY + (r * h) * 1.25;
 
                 let cardIndex = c + r * cols;
                 this.table.cards[cardIndex].x = x;
                 // console.log(c, r, this.rows, this.cols, cardIndex);
                 this.table.cards[cardIndex].y = y;
+
+                deckSound.play();
             }
         }
     }
@@ -125,6 +133,7 @@ class Game {
         // Display the table
         background(this.table.tableColor.r, this.table.tableColor.g, this.table.tableColor.b);
         this.displayCards();
+
     }
 
     displayCards() {
@@ -149,6 +158,7 @@ class Game {
         this.triggerEnd();
         this.resetFlip();
         this.checkEnding()
+
     }
 
     matchCard() {
@@ -204,7 +214,7 @@ class Game {
                 this.flippedCards[1].checked = true;
 
                 // Play sound when two matches
-                // this.flipSound.play();
+                flipSound.play();
 
                 // Cards have the same suite, do something (e.g., remove the matched cards)
                 console.log("Matched!");
@@ -237,23 +247,36 @@ class Game {
             currentGame += 1;
             setTimeout(() => {
                 console.log("Checking ending...");
-                currentState = new Title(gameDialogue[currentGame]);
+                // currentState = new Title(gameDialogue[currentGame]);
+
+                // Increment rows and cols
                 rows += 1;
-                cols += 1;
-                // for (let i = 0; i < currentGame; i++) {
-                // console.log("Checking dialogue...");
-                // currentState.updateTitleText(gameDialogue[0]);
-                // currentGame += 1
-                // }
+                cols += 2;
+
+                // Decrease the size of the cards
+                // w -= 10;
+                // h -= 10;
+
+                // width += 10
+                // height += 10
+
+                // Increase canvas size
+                const newCanvasWidth = width + 50;  // Adjust the value based on your requirements
+                const newCanvasHeight = height + 50;  // Adjust the value based on your requirements
+                createCanvas(newCanvasWidth, newCanvasHeight);
+
+                // Update the currentState with a new Title and game dialogue
+                currentState = new Title(gameDialogue[currentGame]);
+
             }, 500);
         }
     }
 
 
-    music() {
-        // Loop bg sound for the whole game
-        this.bgSound.loop();
-    }
+    // music() {
+    //     // Loop bg sound for the whole game
+    //     bgSound.loop();
+    // }
 
     keyPressed() {
 

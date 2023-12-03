@@ -23,7 +23,7 @@ class Title {
     // state needs to do each frame, which is display the title.
     draw() {
         // Set the background.
-        console.log("Drawing title...");
+
         background(0);
         this.typewriter.display();
 

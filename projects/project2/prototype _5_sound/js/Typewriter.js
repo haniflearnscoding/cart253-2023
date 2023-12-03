@@ -20,6 +20,8 @@ class Typewriter {
         // The position to display the text at
         this.x = 0;
         this.y = 0;
+
+
     }
 
     // typewrite(message,x,y)
@@ -42,7 +44,7 @@ class Typewriter {
     // Adds the next character to our display text if possible
     addNextCharacter() {
         // First check if we've reached the end of the full text
-        console.log(this.fullText);
+        // console.log(this.fullText);
         if (this.nextChar >= this.fullText.length) {
             // If so, just return and don't do anything because we're finished
             return;
@@ -62,8 +64,8 @@ class Typewriter {
     display() {
         push();
         fill(255);
-        textFont(`Courier`);
-        textSize(30);
+        textFont(cardFont);
+        textSize(12);
         textAlign(CENTER, BOTTOM);
         text(this.displayText, this.x, this.y);
         pop();
