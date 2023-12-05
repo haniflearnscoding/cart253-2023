@@ -1,8 +1,10 @@
 /**
- * Project 2: Memory!
+ * Project 2: Memory.
  * Hanif Hashim
  * 
  * Memory, a card game discussing the metaphor of memory
+ * Dialogue of the game inspired by following article:
+ * https://www.poetryfoundation.org/harriet-books/2016/05/metaphors-are-all-we-have-to-describe-memory-kristin-prevallets-a-burning-is-not-a-letting-go-at-guernica
  */
 
 "use strict";

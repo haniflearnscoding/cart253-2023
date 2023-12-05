@@ -1,3 +1,10 @@
-# Template p5 project
+# Project 1: Memory.
+by Hanif Hashim
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+Memory, a card game discussing the metaphor of memory. 
+
+Attributions:
+- Typrewriter class: https://github.com/pippinbarr/cart253/tree/main/examples/text/typewriter-effect
+
+-Title class: https://github.com/pippinbarr/cart253/blob/main/examples/structure/oop-states/js/Title.js
+
