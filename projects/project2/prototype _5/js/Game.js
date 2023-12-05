@@ -186,7 +186,7 @@ class Game {
                 // Cards have different suites, flip them back or take other actions
                 console.log("Not matched!");
 
-                // if (shouldFlipBack) {
+
 
                 for (let i = 0; i < this.table.cards.length; i++) {
                     let card = this.table.cards[i];
@@ -196,7 +196,7 @@ class Game {
                         }, 500);
                     }
                 }
-                // }
+
             }
 
 
