@@ -28,25 +28,12 @@ class Title {
         this.typewriter.display();
 
     }
-
-
-    // updateTitleText(newTitle) {
-    //     this.newText = newTitle
-    //     console.log("Updating title text...");
-    //     this.typewriter = this.newText;
-    //     this.typewriter = new Typewriter();
-    //     // this.draw();
-    //     console.log(this.newText);
-    //     this.text();
-    // }
-
+    //text()
+    //Function to display text using typerwriter effect
     text() {
-
         push();
         fill(255);
-        // this.titleString.typewrite(`Friends, Romans, Countryfolk...`, 100, 100);
         text(this.typewriter.typewrite(this.newText, width / 2, height / 2));
-
         pop();
     }
 

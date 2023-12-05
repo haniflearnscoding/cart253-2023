@@ -10,6 +10,7 @@ class Game {
                 g: 101,
                 b: 77
             },
+            // An array of card suits
             suites: [`Hearts`, `Clubs`, `Spades`, `Diamonds`]
         };
 
@@ -17,9 +18,6 @@ class Game {
 
         //check for all cards flipped on table for ending state
         this.allCardsFlipped = [];
-
-        // this.state = `title`; // title, simulation, end
-
 
         // Font used for characters on card
         this.cardFont = cardFont;
@@ -33,33 +31,21 @@ class Game {
         //SFX played when deck is placed
         this.deckSound = deckSound;
 
-        // this.rows = 1;
-        // this.cols = 2;
+        //Number of rows and columns
         this.rows = rows;
         this.cols = cols;
 
-        // this.w = 50;
-        // this.h = 70;
-
+        //Width and height of each card
         this.w = w;
         this.h = h;
-
-        //Typewriter narating the story of the game
-        // this.typewriter;
-
-        // A variable to store the currently active state object (starts empty)
-        // this.currentState = new Title();
 
         // Create a new card using the arguments
         this.createDeck();
         this.placeDeck(width, height);
-        console.log(this.table);
-        // console.log(this.flippedCards);
-        // console.log(this.allCardsFlipped);
 
-        // this.music();
     }
 
+    // Function to create a deck of cards with a different suit
     createDeck() {
         // Create Deck
         for (let i = 0; i < rows * cols; i += 2) {
@@ -83,21 +69,21 @@ class Game {
                     char = ''; // Default character if not specified
             }
 
+            //Create two cards with the same suit and add it to the table
             let card = new Card(0, 0, char)
             this.table.cards.push(card);
             let card2 = new Card(0, 0, char)
             this.table.cards.push(card2);
-
-
         }
 
     }
-
+    //Function to place cards on the table
     placeDeck(width, height) {
+        //Shuffle the cards
         this.table.cards.sort(function (a, b) {
             return 0.5 - Math.random();
         });
-
+        //Loop through rows and columns 
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
                 // Calculate the center of the canvas
@@ -108,45 +94,44 @@ class Game {
                 let startX = centerX - (cols / 2) * w * 1.25;
                 let startY = centerY - (rows / 2) * h * 1.25;
 
-                // Create our cards by counting up to the number of the cards
+                //Calculate the position of each card
                 let x = startX + (c * w) * 1.25;
-                // console.log(centerX, this.cols, this.w);
-
                 let y = startY + (r * h) * 1.25;
 
+                //Calculate the index of the current card 
                 let cardIndex = c + r * cols;
+
+                //Set the position of the card
                 this.table.cards[cardIndex].x = x;
-                // console.log(c, r, this.rows, this.cols, cardIndex);
                 this.table.cards[cardIndex].y = y;
 
+                //Play the sound effect when deck is placed
                 deckSound.play();
             }
         }
     }
 
+    //Draw function
     draw() {
         this.simulation()
-        // console.log(`hello`);
     }
 
+    //Simulation function
     simulation() {
         // Display the table
         background(this.table.tableColor.r, this.table.tableColor.g, this.table.tableColor.b);
         this.displayCards();
-
     }
 
+    //function that dislays cards on the table
     displayCards() {
         // Loop through all the cards in the array and display them
         for (let i = 0; i < this.table.cards.length; i++) {
             let card = this.table.cards[i];
-
             card.display();
-
         }
-
     }
-
+    //MousePressed function to handle mouse interations
     mousePressed() {
         // Loop through all the cards and check if the mouse is over each card
         for (let i = 0; i < this.table.cards.length; i++) {
@@ -154,59 +139,38 @@ class Game {
             card.mousePressed();
         }
 
+        //When mouse pressed, call following functions
         this.matchCard();
         this.triggerEnd();
         this.resetFlip();
         this.checkEnding()
 
     }
-
+    //function that matches the suits of a pair of cards
     matchCard() {
-        // Array to store flipped cards
-
         // Loop through all the cards to find flipped ones
         for (let i = 0; i < this.table.cards.length; i++) {
-            // for (let j = 0; j < this.table.cards.length; j++) {
             let card = this.table.cards[i];
-            // let card2 = this.table.cards[j];
-
-            // Check if the card is flipped
+            // Check if the card is flipped and not already in the flippedCards array
             if (card.flipped && this.flippedCards.length < 2 && !this.flippedCards.includes(card) && card.checked === false) {
                 // Add the flipped card to the array
                 this.flippedCards.push(card);
-                console.log(this.flippedCards.length);
             }
-
-            // if (card2.flipped && this.flippedCards.length < 2 && !this.flippedCards.includes(card2) && card2.checked === false) {
-            //     //When two matching cards are flipped, push the card into allFlippedCards
-            //     this.allCardsFlipped.push(card2);
-            //     console.log(this.allCardsFlipped.length);
-            // }
-
-            // }
-
-
         }
 
     }
-
+    // Function that checks if all cards on the table are flipped
     triggerEnd() {
         // Check the number of flipped cards
         if (this.flippedCards.length === 2 && this.flippedCards[0].suite === this.flippedCards[1].suite) {
             // Two matching cards are flipped, push them into allCardsFlipped
             this.allCardsFlipped.push(this.flippedCards[0], this.flippedCards[1]);
-            console.log(this.allCardsFlipped.length);
         }
     }
 
     resetFlip() {
-        // console.log("resetFlip function called"); // Add this line
-
         // Check if there are exactly two flipped cards
         if (this.flippedCards.length === 2) {
-            // console.log(flippedCards.length);
-
-            // let shouldFlipBack = true; // Flag to determine whether any card should be flipped back
 
             // Check if the suites of the two flipped cards are the same
             if (this.flippedCards[0].suite === this.flippedCards[1].suite) {
